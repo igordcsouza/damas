@@ -1,0 +1,57 @@
+Requisitos Funcionais:
+
+Máquina de regras (geral):
+*	O sistema deve possibilitar o jogo entre duas pessoas ou entre um jogador e uma máquina
+
+*	Cada jogador deve possuir 12 peças e ter como objetivo “capturar” as peças do adversário
+
+*	Vence o jogo aquele que capturar todas as peças do oponente
+
+*	Se não houver nenhuma captura no jogo durante 20 turnos, o jogo automaticamente termina em um empate, independentemente do número de peças capturadas por cada jogador
+
+*	Se uma mesma jogada se repetir por três turnos consecutivos por ambos os jogadores, o jogo termina em empate independentemente do número de peças capturadas por cada jogador
+
+*	Cada jogador pode mover apenas uma peça por turno
+
+*	Duas peças não podem ocupar a mesma casa no tabuleiro
+
+*	Cada jogador pode capturar quantas peças forem disponíveis ( múltipla captura).
+
+ 
+ 
+Peças (específicas):
+*	O jogo deve permitir apenas dois tipos de peças: Peça comum (que são as peças disponíveis para o jogador desde o início do jogo) e as peças “Dama”.
+
+*	Uma peça comum é capaz de mover-se apenas uma casa de cada vez, sempre em movimento diagonal a não ser que esteja em risco de capturar uma peça do adversário.
+
+*	Para que seja realizada uma captura, devem ser atendidas as seguintes premissas:
+
+*	Ambas as peças encontram-se em posições adjacentes
+
+*	A casa diagonal seguinte à peça em risco de captura deve estar livre para a peça que realizará a captura, na mesma direção do movimento.
+
+*	O jogador só pode fazer uma captura em seu turno de jogo
+
+*	É permitido ao jogador realizar mais de uma captura por turno se:
+
+*	Ao realizar uma captura imediatamente existir possibilidade de outra captura. Neste caso o jogador deve obrigatoriamente fazê-la naquele mesmo turno.
+
+*	Se uma peça comum do jogador finaliza seu turno na última fileira de casas do lado oposto do tabuleiro, esta peça comum torna-se uma peça dama.
+
+*	Uma peça dama é capaz de mover-se um número ilimitado de casas na diagonal desde que o caminho esteja livre
+
+*	Uma dama não pode capturar peças não adjacentes
+ 
+Tabuleiro(específicas):
+*	O tabuleiro deve ter dimensão 8x8 (64 casas)
+
+*	Ao início do jogo, as fileiras 1 e 2 devem ser preenchidas com as peças do jogador 1 e as fileiras 7 e 8 com as peças do jogador 2
+
+Requisitos não funcionais:
+*	O jogo deve funcionar sem interrupção durante as partidas
+
+*	O sistema deve possuir uma interface simples e de fácil manuseio
+
+*	Ao se finalizar uma partida, o resultado deve ser mostrado imediatamente
+
+*	Um jogador que nunca jogou, deve ser capaz de jogar sem muita dificuldade

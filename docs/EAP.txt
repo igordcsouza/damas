@@ -1,0 +1,101 @@
+DAMAS
+	Desenvolvimento
+		Interface
+			Tabuleiro
+			Peças
+				Visual peça Comum
+				Visual peça Dama
+			Animações
+				Animação de movimento comum
+				Animação de movimento dama
+				Animação de Seleção
+				Animação de movimentos possíveis (Extra)
+				Animação de captura
+				Animação de transformação de Dama
+			HUD (Head-Up Display)
+				Placar
+				Indicador de turno
+				Contador de jogadas
+				Telas de vitória/derrota/empate
+				Indicador Linha x Coluna
+		Máquina de Regras
+			Movimento
+				Movimento Comum
+				Movimento Dama
+			Captura
+				Captura comum
+				Captura múltipla
+			Dama
+				Transformação
+			Registros
+				Contador de placar
+			Validações de jogo
+				Validação de estado de jogo ( derrota/vitoria/empate)
+				Validação de jogadas da Dama
+				Validação de transformação da Dama
+				
+		Jogador
+			Jogadas
+				Movimento
+					Movimento de ataque
+					Movimento de fuga
+				Captura
+					Captura Comum
+					Captura Múltipla
+			Jogador Artificial
+					Movimento Artificial
+							 Encontrar jogadas possíveis
+							 Escolher melhor jogada disponível		
+	Documentação e Planejamento
+		Escopo do Produto
+			Elaboração do Escopo
+			Documentação de Escopo			
+			Seleção de tecnologias
+			Aprovação das regras do jogo a serem implementadas
+			Desenvolvimento de Especificação Funcional
+		Árvore EAP
+			Elaboração da árvore EAP
+	 		Documentação da árvore EAP
+			Definir sequência das atividades
+			Definir esforço das atividades
+		Cronograma
+			Formalizar cronograma
+				Elaborar plano de cronograma
+		Análise de Riscos
+			Definir riscos
+			Definir plano de gestão de riscos
+		Organização de Equipe
+			Definir papéis de membros da equipe
+		Reunião
+			Reunião Sprint 1
+			Reunião Sprint 2
+			Reunião Sprint 3
+			Reunião Sprint 4
+			Reunião Sprint 5
+	Testes e Avaliações
+		Teste de Usabilidade
+			Teste de Usuário Neutro
+				Teste de início de jogo
+				Teste de jogada de ataque
+				Teste de jogada de defesa
+				teste de jogada de movimento
+		Teste IA
+			Teste de jogada de ataque
+			Teste de jogada de defesa
+			teste de jogada de movimento
+		Teste Unitário
+		Teste Integraçao
+		Teste Sistema
+	Apresentação
+		Material 1º Entrega
+			Organizar informações do material
+			Criação do material
+			Apresentação 1º Entrega
+		Material 2º Entrega
+			Organizar informações do material
+			Criação do material
+			Apresentação 2º Entrega
+		Material 3º Entrega
+			Organizar informações do material
+			Criação do material
+			Apresentação 3º Entrega		
