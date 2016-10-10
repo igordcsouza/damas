@@ -7,8 +7,19 @@ $(document).ready(function() {
 				var nome_casa ="casa_"+i.toString()+"_"+j.toString();
 				var classe = (i%2==0?(j%2==0?"casa_branca":"casa_preta"):(j%2!=0?"casa_branca":"casa_preta"));
 				$("#linha_"+i.toString()).append("<div id='"+nome_casa+"' class='casa "+classe+"' />");
+				if(classe == "casa_preta"){
+					if (i < 3) {
+						$("#"+nome_casa).append("<img src='img/preta.png' class='peca' id='"+nome_casa.replace("casa", "peca_preta")+"'/>");
+					}
+					else
+						if (i > 4) {
+							$("#"+nome_casa).append("<img src='img/branca.png' class='peca' id='"+nome_casa.replace("casa", "peca_branca")+"'/>");	
+						}
+				}
 			}
 		}
 	});
+
     montar_tabuleiro();
+
 });
