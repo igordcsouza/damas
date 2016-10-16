@@ -9,11 +9,11 @@ $(document).ready(function() {
 				$("#linha_"+i.toString()).append("<div id='"+nome_casa+"' class='casa "+classe+"' />");
 				if(classe == "casa_preta"){
 					if (i < 3) {
-						$("#"+nome_casa).append("<img src='img/preta.png' class='peca' id='"+nome_casa.replace("casa", "peca_preta")+"'/>");
+						$("#"+nome_casa).append("<img src='img/preta_2.png' class='peca' id='"+nome_casa.replace("casa", "peca_preta")+"'/>");
 					}
 					else
 						if (i > 4) {
-							$("#"+nome_casa).append("<img src='img/branca.png' class='peca' id='"+nome_casa.replace("casa", "peca_branca")+"'/>");	
+							$("#"+nome_casa).append("<img src='img/branca_2.png' class='peca' id='"+nome_casa.replace("casa", "peca_branca")+"'/>");	
 						}
 				}
 			}

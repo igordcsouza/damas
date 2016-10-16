@@ -3,11 +3,38 @@
  	<meta charset="UTF-8" />
  	<title>Damas ES2</title>
 	<link rel="stylesheet" href="css/style.css" type="text/css"/>
+	<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="js/tabuleiro.js"></script>
 </head>
 <body>
-	<div id="tabuleiro">
+	<div class="container">
+		<div class="row">
+			<div ng-view class="col-xs-8 content">
+				<div id="tabuleiro">
+				</div>
+				</br>
+		   		<button type="button" class="btn btn-default">Regras</button>
+			</div>
+			<div ng-view class="col-xs-4 content">
+				<div class="row top-buffer">
+					<div class="col-xs-12"><div class="avatar">Player 1</div></div>
+				</div>
+				<div class="row">
+	                <div class="col-xs-12"><div id="cronometro">00:00:00</div></div>
+	            </div>
+	            <div class="row">
+	                <div class="col-xs-12"><div class="avatar">Player 2</div></div>
+	            </div>
+			</div>
+	    </div>
 	</div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.js"></script>
+
 </body>
 </html>
