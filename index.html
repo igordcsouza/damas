@@ -1,13 +1,76 @@
 <html lang="pt-br">
 <head>
- 	<meta charset="UTF-8" />
- 	<title>Damas ES2</title>
-	<link rel="stylesheet" href="css/style.css" type="text/css"/>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src="js/tabuleiro.js"></script>
+    <script type="text/javascript" src="classes/usuarios.js"></script>
+    <script type="text/javascript" src="classes/display.js"></script>
+    <script type="text/javascript" src="classes/casa_peca_posicao.js"></script>
+    <script type="text/javascript" src="classes/tabuleiro.js"></script>
+    <style type="text/css">
+        *, html, body {padding:0px; margin:0px;} 
+        #tabelaDisplay {margin-top:50px;}
+        h2 {display:inline-block; padding:20px;}
+        
+        textarea{ resize: none;}
+        img.imgHumano {
+            margin-right: 45px;
+        }
+        img.imgMakina {
+            margin-left: 45px;
+        }
+
+        #humanoFalando, #makinaFalando {
+            font-family: "Comic Sans MS";
+            font-size: 22px;
+            color: gray;
+            width: 280px;
+            height: 200px;
+            border: 0px;
+            font-weight: bold;
+        }
+        #humanoFalando {
+            text-align: right;
+        }
+        
+        td.tdAnimacao {width:300px; max-width:300px; vertical-align:bottom;}
+        
+        #animacaoHumano {
+            text-align: right;
+        }
+
+        #animacaoMakina {
+            text-align: left;
+        }
+        
+        table.tabuleiro, table.tabuleiro td { border: 3px solid black; border-collapse: collapse; }
+        table.tabuleiro td {width:70px; height:70px; text-align:center;   max-width: 70px; max-height: 70px; }
+        
+        
+        /*COLORINDO*/
+        table.tabuleiro td {background-color:Silver;} 
+        table.tabuleiro .cor {background-color:Black;}
+        
+        
+    </style>
+    
 </head>
 <body>
-	<div id="tabuleiro">
-	</div>
 </body>
+    <script type="text/javascript">
+        var tb;
+        var c = setInterval(verificaClick, 800);
+        var usuarioH;
+        var display = new Display();
+        document.body.appendChild(display.IniciaDisplayStart());
+
+
+        function verificaClick() {
+            usuarioH = display.getUsuarioSelecionado();
+            if (usuarioH != null) {
+                clearInterval(c);
+                document.body.innerHTML = ""; //limpando o body;
+                document.body.appendChild(display.IniciaDisplayTabuleiro());
+                tb = new Tabuleiro(usuarioH);
+            }
+        }
+    </script>
 </html>
+
