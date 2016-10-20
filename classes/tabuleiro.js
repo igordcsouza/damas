@@ -113,7 +113,7 @@ function Tabuleiro(humano) {
                 console.log("IA JOGANDO");
             } else {
                 if (count == 12) {
-                    Anima(that.usuMakina, "Vão bora, porra!");
+                    Anima(that.usuMakina, "VÃ£o bora, porra!");
                     count = 0;
                 }
             }
@@ -143,7 +143,7 @@ function Tabuleiro(humano) {
     /* implementar a regra de movimento*/
     var validaMovimento = function (c) {
 
-        if (c.getPeca() != null) {   //Verificando se a casa de destino está sem peça
+        if (c.getPeca() != null) {   //Verificando se a casa de destino estÃ¡ sem peÃ§a
             return false;
         }
 
@@ -162,7 +162,7 @@ function Tabuleiro(humano) {
                 casa.setPeca(CasaSelecionada.getPeca());
                 CasaSelecionada.LimpaCasa();
             } else {
-                //Anima(CasaSelecionada.getPeca().Usuario, "Como você é burro!! aprende a jogar damas!"); 
+                //Anima(CasaSelecionada.getPeca().Usuario, "Como vocÃª Ã© burro!! aprende a jogar damas!"); 
                 Anima(that.usuMakina, that.usuMakina.MsgErroValidacao());  // A maquina na vai cometer erros de validacao, logo podemos marretar o usuario aqui
             }
             CasaSelecionada = null;
