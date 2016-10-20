@@ -1,15 +1,15 @@
 function Usuario() {
 
     this.msgErroValidacao = new Array();
-    this.msgErroValidacao[0] = "Como você é burro!! aprende a jogar damas!";
-    this.msgErroValidacao[1] = "Ai que burro, dá zero pra ele!";
-    this.msgErroValidacao[2] = "Nãoooo! se é burro cara! que loucura! que coisa absurda!"
+    this.msgErroValidacao[0] = "Como vocÃª Ã© burro!! aprende a jogar damas!";
+    this.msgErroValidacao[1] = "Ai que burro, dÃ¡ zero pra ele!";
+    this.msgErroValidacao[2] = "NÃ£oooo! se Ã© burro cara! que loucura! que coisa absurda!"
 
     this.msgErroPecaVazia = new Array();
-    this.msgErroPecaVazia[0] = "Animal!! primeiro escolhe sua peça!";
+    this.msgErroPecaVazia[0] = "Animal!! primeiro escolhe sua peÃ§a!";
 
     this.msgErroPecaErrada = new Array();
-    this.msgErroPecaErrada[0] = "Dá pra escolher a sua peça!!";
+    this.msgErroPecaErrada[0] = "DÃ¡ pra escolher a sua peÃ§a!!";
 
 }
 
