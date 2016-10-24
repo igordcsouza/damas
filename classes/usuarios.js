@@ -1,15 +1,15 @@
 function Usuario() {
 
     this.msgErroValidacao = new Array();
-    this.msgErroValidacao[0] = "Como você é burro!! aprende a jogar damas!";
-    this.msgErroValidacao[1] = "Ai que burro, dá zero pra ele!";
-    this.msgErroValidacao[2] = "Nãoooo! se é burro cara! que loucura! que coisa absurda!"
+    this.msgErroValidacao[0] = "ERRO VALIDACAO 0";
+    this.msgErroValidacao[1] = "ERRO VALIDACAO 1";
+    this.msgErroValidacao[2] = "ERRO VALIDACAO 2"
 
     this.msgErroPecaVazia = new Array();
-    this.msgErroPecaVazia[0] = "Animal!! primeiro escolhe sua peça!";
+    this.msgErroPecaVazia[0] = "ERRO PECA VAZIA 0";
 
     this.msgErroPecaErrada = new Array();
-    this.msgErroPecaErrada[0] = "Dá pra escolher a sua peça!!";
+    this.msgErroPecaErrada[0] = "ERRO PECA ERRADA 0";
 
 }
 
@@ -18,6 +18,8 @@ Usuario.prototype.ImagemPeca = function () {
     img.setAttribute("src", this.imgPeca);
     img.setAttribute("width", "65");
     img.setAttribute("height", "65");
+    img.setAttribute("id",Math.random().toString(36).substring(7));
+    img.setAttribute("onclick", "colorirPecaSelecionada();");
     return img;
 };
 
@@ -25,6 +27,7 @@ Usuario.prototype.ImagemFace = function () {
     var img = document.createElement("img");
     img.setAttribute("src", this.imgFace);
     img.setAttribute("class", this.class);
+    img.setAttribute("style", "height: 200px;");
     return img;
 };
 
@@ -50,16 +53,16 @@ Usuario.prototype.MsgErroPecaErrada = function () {
 
 function Jobs() {
     this.nome = "jobs";
-    this.imgPeca = "imagens/branca.png";
-    this.imgFaceAnima = "imagens/jobsAnima.gif";
-    this.imgFace = "imagens/jobs.jpg";
+    this.imgPeca = "img/branca.png";
+    this.imgFaceAnima = "img/jobsAnima.gif";
+    this.imgFace = "img/branca.png";
 }
 
 function Bill() {
     this.nome = "bill";
-    this.imgPeca = "imagens/preta.png";
-    this.imgFaceAnima = "imagens/billAnima.gif";
-    this.imgFace = "imagens/bill.jpg";
+    this.imgPeca = "img/preta.png";
+    this.imgFaceAnima = "img/billAnima.gif";
+    this.imgFace = "img/preta.png";
 }
 
 

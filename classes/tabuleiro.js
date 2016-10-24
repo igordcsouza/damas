@@ -51,6 +51,7 @@ function Tabuleiro(humano) {
                 if ((i % 2) == 0) {
                     if ((j % 2) == 0) {
                         ArrayCasas[i][j].setCor("cor");
+
                     }
                 }else {
                     if (!(j % 2) == 0) {
@@ -65,17 +66,14 @@ function Tabuleiro(humano) {
     var DistribuiPecas = function () {
         for (var i = 0; i < 3; i++) {
             for (var j = 0; j < 8; j++) {
-
                 if (((i % 2) == 0) && ((j % 2) == 1)) {
-                    ArrayCasas[i][j].setPeca(new Peca(that.usuMakina));
-                    ArrayCasas[i + 5][j - 1].setPeca(new Peca(that.usuHumano));
+                    ArrayCasas[i][j - 1].setPeca(new Peca(that.usuMakina));
+                    ArrayCasas[i + 5][j].setPeca(new Peca(that.usuHumano));
                 }
-
                 if (((i % 2) == 1) && ((j % 2) == 0)) {
-                    ArrayCasas[i][j].setPeca(new Peca(that.usuMakina));
-                    ArrayCasas[i + 5][j + 1].setPeca(new Peca(that.usuHumano));
+                    ArrayCasas[i][j + 1].setPeca(new Peca(that.usuMakina));
+                    ArrayCasas[i + 5][j].setPeca(new Peca(that.usuHumano));
                 }
-
             }
         }
     }
@@ -113,7 +111,8 @@ function Tabuleiro(humano) {
                 console.log("IA JOGANDO");
             } else {
                 if (count == 12) {
-                    Anima(that.usuMakina, "Vão bora, porra!");
+                    // Removendo a animação - Anima();
+                    // Anima(that.usuMakina, "Bora, bora, bora!");
                     count = 0;
                 }
             }
@@ -151,6 +150,16 @@ function Tabuleiro(humano) {
             return false;
         }
 
+        if (c.getPosicao().x >= CasaSelecionada.getPosicao().x + 2){
+            console.log("O player pulou uma linha. Verificar se foi o caso de comer um peca ou uma jogada irregular.");
+            return false;
+        }
+
+        if ((c.getPosicao().y >= CasaSelecionada.getPosicao().y +2) || (c.getPosicao().y <= CasaSelecionada.getPosicao().y -2)){
+            console.log("O player pulou uma coluna. Verificar se foi caso de comer uma peca ou uma jogada irregular.");
+            return false;
+        }
+
         return true;
     }
 
@@ -158,7 +167,7 @@ function Tabuleiro(humano) {
     this.Movimenta = function (casa) {
         if (CasaSelecionada != null) {
             if (validaMovimento(casa)) {
-                //console.log("De:(" + CasaSelecionada.getPosicao().y + "-" + CasaSelecionada.getPosicao().x + ") Para:(" + casa.getPosicao().y + "-" + casa.getPosicao().x + ")");
+                console.log("De:(" + CasaSelecionada.getPosicao().y + "-" + CasaSelecionada.getPosicao().x + ") Para:(" + casa.getPosicao().y + "-" + casa.getPosicao().x + ")");
                 casa.setPeca(CasaSelecionada.getPeca());
                 CasaSelecionada.LimpaCasa();
             } else {
@@ -184,22 +193,22 @@ function Tabuleiro(humano) {
 
 
 
-    var Anima = function (usu, texto) {
-    
-        var td = document.getElementById(usu.tdAnimacao);
-        td.innerHTML = "";                          //Removendo a Imagem Anterior
-        td.appendChild(usu.ImagemFaceAnima());
-        
-
-        document.getElementById(usu.tdFala).value = "";
-        document.getElementById(usu.tdFala).value = texto
-
-        setTimeout(function myFunction() {
-            td.innerHTML = "";
-            td.appendChild(usu.ImagemFace());
-            document.getElementById(usu.tdFala).value = "";
-        }, 3000);
-    }
+    // var Anima = function (usu, texto) {
+    //
+    //     var td = document.getElementById(usu.tdAnimacao);
+    //     td.innerHTML = "";                          //Removendo a Imagem Anterior
+    //     td.appendChild(usu.ImagemFaceAnima());
+    //
+    //
+    //     document.getElementById(usu.tdFala).value = "";
+    //     document.getElementById(usu.tdFala).value = texto
+    //
+    //     setTimeout(function myFunction() {
+    //         td.innerHTML = "";
+    //         td.appendChild(usu.ImagemFace());
+    //         document.getElementById(usu.tdFala).value = "";
+    //     }, 3000);
+    // }
 
 }
 
