@@ -11,7 +11,8 @@ function Display() {
 
     this.IniciaDisplayTabuleiro = function () {
 
-        var centro = document.createElement("center");
+        var divcentro = document.createElement("div");
+        var center = document.createElement("center");
         var tabela = document.createElement("table");
         var linhaTabuleiro = document.createElement("tr");
         var linhaFala = document.createElement("tr");
@@ -34,7 +35,9 @@ function Display() {
 
         AreaHumanoFalando.setAttribute("id", "humanoFalando");
         AreaMakinaFalando.setAttribute("id", "makinaFalando");
-        tabela.setAttribute("id", "tabelaDisplay");
+        //tabela.setAttribute("id", "tabelaDisplay");
+
+        divcentro.setAttribute("id", "divcentro");
 
 
         colhumanoFalando.appendChild(AreaHumanoFalando);
@@ -49,8 +52,9 @@ function Display() {
         tabela.appendChild(linhaTabuleiro);
         tabela.appendChild(linhaFala);
 
-        centro.appendChild(tabela);
-        return centro;
+        center.appendChild(tabela);
+        divcentro.appendChild(center);
+        return divcentro;
 
     }
 
@@ -97,7 +101,6 @@ function Display() {
         };
 
         return display;
-
     }
 };
 
