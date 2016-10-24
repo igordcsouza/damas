@@ -136,27 +136,33 @@ function Tabuleiro(humano) {
     } ()
 
 
-
+    var movimentoIrregular = function(){
+        alert("O movimento que voce esta tentando fazer é considerado irregular.");
+    }
 
 
     /* implementar a regra de movimento*/
     var validaMovimento = function (c) {
 
         if (c.getPeca() != null) {   //Verificando se a casa de destino está sem peça
+            movimentoIrregular();
             return false;
         }
 
         if (c.getPosicao().x == CasaSelecionada.getPosicao().x || c.getPosicao().y == CasaSelecionada.getPosicao().y) {   //Verificando movimentacao lateral
+            movimentoIrregular();
             return false;
         }
 
         if (c.getPosicao().x >= CasaSelecionada.getPosicao().x + 2){
             console.log("O player pulou uma linha. Verificar se foi o caso de comer um peca ou uma jogada irregular.");
+            movimentoIrregular();
             return false;
         }
 
         if ((c.getPosicao().y >= CasaSelecionada.getPosicao().y +2) || (c.getPosicao().y <= CasaSelecionada.getPosicao().y -2)){
             console.log("O player pulou uma coluna. Verificar se foi caso de comer uma peca ou uma jogada irregular.");
+            movimentoIrregular();
             return false;
         }
 
