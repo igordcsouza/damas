@@ -6,7 +6,12 @@
     <script type="text/javascript" src="classes/tabuleiro.js"></script>
     <style type="text/css">
         *, html, body {padding:0px; margin:0px;} 
-        #tabelaDisplay {margin-top:50px;}
+        #tabelaDisplay {}
+        body {
+
+           /* background-color:red;*/
+        }
+
         h2 {display:inline-block; padding:20px;}
         
         textarea{ resize: none;}
@@ -48,6 +53,39 @@
         table.tabuleiro td {background-color:Silver;} 
         table.tabuleiro .cor {background-color:Black;}
         
+        #divcentro 
+        {
+            margin-top:50px;
+	        width:1200px;
+	        position:absolute;
+	        left:50%;
+	        margin-left:-600px;
+	       /* background-color:Aqua;*/
+	       z-index:1000;
+	    }
+        
+        
+        
+        #CasaToasty
+        {
+          width:300px;
+          height:100%;
+          position: absolute;
+          z-index:1;
+ 
+        }
+        #Toasty
+        {
+          height:250px;
+          width:250px;
+          position: absolute;
+          bottom: 0;
+          left: -250;
+           z-index:10;
+
+        }
+                
+        button {top: 100px; left:10px; position:absolute; z-index:1000; width:50px; height:50px;} /* APENAS PARA TESTE TOASTY */
         
     </style>
     
@@ -56,25 +94,21 @@
 </body>
     <script type="text/javascript">
         var tb;
-        var c = setInterval(verificaClick, 800);
+        var thread = setInterval(verificaClick, 800);
         var usuarioH;
         var display = new Display();
         document.body.appendChild(display.IniciaDisplayStart());
-
-
+        
         function verificaClick() {
             usuarioH = display.getUsuarioSelecionado();
             if (usuarioH != null) {
-                clearInterval(c);
+                clearInterval(thread);
                 document.body.innerHTML = ""; //limpando o body;
                 document.body.appendChild(display.IniciaDisplayTabuleiro());
                 tb = new Tabuleiro(usuarioH);
             }
         }
-
-        function colorirPecaSelecionada(event) {
-            console.log("Colorir a peca quando for selecionada.")
-        }
+        
     </script>
 </html>
 

@@ -1,28 +1,20 @@
-function Casa() {
+function Casa(id) {
 
+    this.Id = id;
     var instance = this;
     var tabuleiro = null;
-    var posicao = null;
+    
     var cor;
     var peca = null;
     var TD = null;
     var TR = null;
-
+    
     this.setTabuleiro = function (value) {
         tabuleiro = value;
     };
 
     this.getTabuleiro = function () {
         return tabuleiro;
-    };
-    
-
-    this.setPosicao = function (value) {
-        posicao = value;
-    };
-
-    this.getPosicao = function () {
-        return posicao;
     };
     
     this.setCor = function (value) {
@@ -36,6 +28,7 @@ function Casa() {
 
     this.setPeca = function (value) {
         peca = value;
+        TD.innerHTML = ""; // removendo oq estava antes
         TD.appendChild(peca.get());
     };
 
@@ -69,16 +62,13 @@ function Casa() {
     };
 }
 
-function Posicao(y, x) {
-    this.x = x;
-    this.y = y;
-}
 
 function Peca(usu) {
     this.Usuario = usu;
     var Dama = false;
     this.getDama = function () { return Dama; };
     this.setDama = function (valor) { Dama = valor; };
+    
     this.get = function () {
         return this.Usuario.ImagemPeca();
     }
