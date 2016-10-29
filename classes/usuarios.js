@@ -18,7 +18,6 @@ Usuario.prototype.ImagemPeca = function () {
     img.setAttribute("src", this.imgPeca);
     img.setAttribute("width", "65");
     img.setAttribute("height", "65");
-    img.setAttribute("id",Math.random().toString(36).substring(7));
     img.setAttribute("onclick", "colorirPecaSelecionada();");
     return img;
 };

@@ -4,13 +4,15 @@
     <script type="text/javascript" src="classes/display.js"></script>
     <script type="text/javascript" src="classes/casa_peca_posicao.js"></script>
     <script type="text/javascript" src="classes/tabuleiro.js"></script>
+    <script type="text/javascript" src="classes/casa.js"></script>
+    <script type="text/javascript" src="classes/peca.js"></script>
+    <script type="text/javascript" src="classes/posicao.js"></script>
     <style type="text/css">
         *, html, body {padding:0px; margin:0px;} 
         #tabelaDisplay {}
         body {
-
-           /* background-color:red;*/
         }
+
 
         h2 {display:inline-block; padding:20px;}
         
@@ -52,6 +54,7 @@
         /*COLORINDO*/
         table.tabuleiro td {background-color:Silver;} 
         table.tabuleiro .cor {background-color:Black;}
+        table.tabuleiro .selected {background-color: Blue;}
         
         #divcentro 
         {
@@ -101,6 +104,7 @@
         
         function verificaClick() {
             usuarioH = display.getUsuarioSelecionado();
+            console.log(usuarioH);
             if (usuarioH != null) {
                 clearInterval(thread);
                 document.body.innerHTML = ""; //limpando o body;

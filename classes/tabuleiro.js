@@ -165,7 +165,9 @@ function Tabuleiro(humano) {
             movimentoIrregular();
             return false;
         }
-
+        
+        CasaSelecionada.selected()
+        c.selected();
         return true;
     }
 
@@ -192,7 +194,6 @@ function Tabuleiro(humano) {
                 Anima(that.usuMakina, that.usuMakina.MsgErroPecaErrada());  // A maquina na vai cometer erros de validacao, logo podemos marretar o usuario aqui
                 return;
             }
-
             CasaSelecionada = casa;
         }
     }
