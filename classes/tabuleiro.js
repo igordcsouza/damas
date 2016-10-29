@@ -136,8 +136,10 @@ function Tabuleiro(humano) {
     } ()
 
 
-    var movimentoIrregular = function(){
+    var movimentoIrregular = function(c){
         alert("O movimento que voce esta tentando fazer é considerado irregular.");
+        c.selected();
+        CasaSelecionada.selected();
     }
 
 
@@ -145,24 +147,24 @@ function Tabuleiro(humano) {
     var validaMovimento = function (c) {
 
         if (c.getPeca() != null) {   //Verificando se a casa de destino está sem peça
-            movimentoIrregular();
+            movimentoIrregular(c);
             return false;
         }
 
         if (c.getPosicao().x == CasaSelecionada.getPosicao().x || c.getPosicao().y == CasaSelecionada.getPosicao().y) {   //Verificando movimentacao lateral
-            movimentoIrregular();
+            movimentoIrregular(c);
             return false;
         }
 
         if (c.getPosicao().x >= CasaSelecionada.getPosicao().x + 2){
             console.log("O player pulou uma linha. Verificar se foi o caso de comer um peca ou uma jogada irregular.");
-            movimentoIrregular();
+            movimentoIrregular(c);
             return false;
         }
 
         if ((c.getPosicao().y >= CasaSelecionada.getPosicao().y +2) || (c.getPosicao().y <= CasaSelecionada.getPosicao().y -2)){
             console.log("O player pulou uma coluna. Verificar se foi caso de comer uma peca ou uma jogada irregular.");
-            movimentoIrregular();
+            movimentoIrregular(c);
             return false;
         }
         
@@ -186,7 +188,8 @@ function Tabuleiro(humano) {
         } else {
 
             if (casa.getPeca() == null) {
-                Anima(that.usuMakina, that.usuMakina.MsgErroPecaVazia());  // A maquina na vai cometer erros de validacao, logo podemos marretar o usuario aqui
+                casa.selected();
+                Anima(that.usuHumano, that.usuHumano.MsgErroPecaVazia());  // A maquina na vai cometer erros de validacao, logo podemos marretar o usuario aqui
                 return;
             }
 
@@ -200,22 +203,22 @@ function Tabuleiro(humano) {
 
 
 
-    // var Anima = function (usu, texto) {
-    //
-    //     var td = document.getElementById(usu.tdAnimacao);
-    //     td.innerHTML = "";                          //Removendo a Imagem Anterior
-    //     td.appendChild(usu.ImagemFaceAnima());
-    //
-    //
-    //     document.getElementById(usu.tdFala).value = "";
-    //     document.getElementById(usu.tdFala).value = texto
-    //
-    //     setTimeout(function myFunction() {
-    //         td.innerHTML = "";
-    //         td.appendChild(usu.ImagemFace());
-    //         document.getElementById(usu.tdFala).value = "";
-    //     }, 3000);
-    // }
+    var Anima = function (usu, texto) {
+    
+        var td = document.getElementById(usu.tdAnimacao);
+        td.innerHTML = "";                          //Removendo a Imagem Anterior
+        td.appendChild(usu.ImagemFaceAnima());
+    
+    
+        document.getElementById(usu.tdFala).value = "";
+        document.getElementById(usu.tdFala).value = texto
+    
+        setTimeout(function myFunction() {
+            td.innerHTML = "";
+            td.appendChild(usu.ImagemFace());
+            document.getElementById(usu.tdFala).value = "";
+        }, 3000);
+    }
 
 }
 
