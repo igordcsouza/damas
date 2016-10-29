@@ -4,6 +4,12 @@ function Peca(usu) {
     this.getDama = function () { return Dama; };
     this.setDama = function (valor) { Dama = valor; };
     this.get = function () {
-        return this.Usuario.ImagemPeca();
+    	if (this.getDama()){
+    		return this.Usuario.ImagemPecaDama();	
+    	}
+    	else {
+    		return this.Usuario.ImagemPeca();
+    	}
+        
     }
 }

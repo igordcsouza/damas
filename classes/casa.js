@@ -7,6 +7,7 @@ function Casa() {
     var peca = null;
     var TD = null;
     var TR = null;
+    var DAMA = false;
 
     this.setTabuleiro = function (value) {
         tabuleiro = value;
@@ -37,6 +38,7 @@ function Casa() {
     this.setPeca = function (value) {
         peca = value;
         TD.appendChild(peca.get());
+
     };
 
 
@@ -49,9 +51,8 @@ function Casa() {
     };
 
     this.selected = function () {
-        
         if (this.getCor() == "cor") {
-            console.log(this.getCor() == "cor");
+            // console.log(this.getCor() == "cor");
             this.setCor("selected");
         }
         else if (this.getCor() == "selected") {
@@ -66,7 +67,7 @@ function Casa() {
 
     this.setTD = function (value) {
         TD = value;
-        TD.onclick = function () {
+        TD.onclick = function () {            
             instance.selected();
             tabuleiro.Movimenta(instance);
         };

@@ -156,14 +156,31 @@ function Tabuleiro(humano) {
             return false;
         }
 
-        if (c.getPosicao().x >= CasaSelecionada.getPosicao().x + 2){
+        if ((c.getPosicao().x >= CasaSelecionada.getPosicao().x + 2) && (!CasaSelecionada.getPeca().getDama())){
             console.log("O player pulou uma linha. Verificar se foi o caso de comer um peca ou uma jogada irregular.");
             movimentoIrregular(c);
             return false;
         }
 
-        if ((c.getPosicao().y >= CasaSelecionada.getPosicao().y +2) || (c.getPosicao().y <= CasaSelecionada.getPosicao().y -2)){
+        if (((c.getPosicao().y >= CasaSelecionada.getPosicao().y +2) || (c.getPosicao().y <= CasaSelecionada.getPosicao().y -2)) && (!CasaSelecionada.getPeca().getDama())){
             console.log("O player pulou uma coluna. Verificar se foi caso de comer uma peca ou uma jogada irregular.");
+            movimentoIrregular(c);
+            return false;
+        }
+
+        // Remover para a validação da dama ser realmente valida
+        // Esse código coloca qualquer pedra que encoste na parede esquerda como dama. 
+        // Apenas para fins de testes.
+        if (c.getPosicao().x == 0) {
+            CasaSelecionada.getPeca().setDama(true);
+        }
+
+        if (c.getPosicao().y == 0) {
+            CasaSelecionada.getPeca().setDama(true);   
+        }
+
+        if ((c.getPosicao().y >= CasaSelecionada.getPosicao().y) && (!CasaSelecionada.getPeca().getDama())) {
+            console.log("Tentando andar apra tras.");
             movimentoIrregular(c);
             return false;
         }
@@ -198,6 +215,7 @@ function Tabuleiro(humano) {
                 return;
             }
             CasaSelecionada = casa;
+            console.log(CasaSelecionada.getPeca().getDama());
         }
     }
 
