@@ -104,21 +104,62 @@ function Tabuleiro(humano) {
 
     var IniciaMakina = function () {
         var count = 1;
-        var c = setInterval(function () {
-            count++;
+        console.log(that.usuHumano.nome);
+        retornaPecaJogavelIa();
+        console.log("IA JOGANDO");
+    }
 
-            if (IApossoJogar) {
-                console.log("IA JOGANDO");
-            } else {
-                if (count == 12) {
-                    // Removendo a animação - Anima();
-                    // Anima(that.usuMakina, "Bora, bora, bora!");
-                    count = 0;
+
+    function retornaPecaJogavelIa() {
+        for (var i = ArrayCasas.length - 1; i >= 0; i--) {
+            for (var j = ArrayCasas[i].length - 1; j >= 0; j--) {
+                if ((ArrayCasas[i][j].getPeca() != null) && (ArrayCasas[i][j].getPeca().Usuario["nome"] != that.usuHumano.nome)) {
+                    if (testaMovimentacaoIA(i,j)){
+                        return;
+                    }
                 }
             }
-        }, 500);
+        }
     }
-    
+
+    function testaMovimentacaoIA(linha,coluna){
+        if ((validaPosicaoIA(linha+1, coluna+1)) || (validaPosicaoIA(linha+1, coluna-1))){
+            return MovimentaPeca(linha,coluna);
+        }
+    }
+
+    function validaPosicaoIA(linha,coluna){
+        if ((ArrayCasas[linha][coluna]) && (ArrayCasas[linha][coluna].getPeca() == null)){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
+    function MovimentaPeca(linha,coluna){
+        var direita = validaPosicaoIA(linha+1, coluna + 1);
+        var esquerda = validaPosicaoIA(linha+1, coluna - 1);
+        var casa = ArrayCasas[linha][coluna];
+
+        if ((direita == true) && (esquerda == true)){
+            if (Math.random() >= 0.5) {
+                ArrayCasas[linha+1][coluna+1].setPeca(casa.getPeca());
+            }
+            else {
+                ArrayCasas[linha+1][coluna-1].setPeca(casa.getPeca());
+            }
+        }
+        else if (direita == true) {
+            ArrayCasas[linha+1][coluna+1].setPeca(casa.getPeca());
+        }
+        else {
+            ArrayCasas[linha+1][coluna-1].setPeca(casa.getPeca());
+        }
+        casa.LimpaCasa();
+        return true;
+    }
 
     /* CONSTRUTOR */
 
@@ -194,9 +235,11 @@ function Tabuleiro(humano) {
     this.Movimenta = function (casa) {
         if (CasaSelecionada != null) {
             if (validaMovimento(casa)) {
-                console.log("De:(" + CasaSelecionada.getPosicao().y + "-" + CasaSelecionada.getPosicao().x + ") Para:(" + casa.getPosicao().y + "-" + casa.getPosicao().x + ")");
+                // console.log("De:(" + CasaSelecionada.getPosicao().y + "-" + CasaSelecionada.getPosicao().x + ") Para:(" + casa.getPosicao().y + "-" + casa.getPosicao().x + ")");
                 casa.setPeca(CasaSelecionada.getPeca());
                 CasaSelecionada.LimpaCasa();
+                IniciaMakina();
+                console.log("Hora da IA executar um movimento.");
             } else {
                 //Anima(CasaSelecionada.getPeca().Usuario, "Como você é burro!! aprende a jogar damas!"); 
                 Anima(that.usuMakina, that.usuMakina.MsgErroValidacao());  // A maquina na vai cometer erros de validacao, logo podemos marretar o usuario aqui

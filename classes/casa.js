@@ -38,7 +38,6 @@ function Casa() {
     this.setPeca = function (value) {
         peca = value;
         TD.appendChild(peca.get());
-
     };
 
 
