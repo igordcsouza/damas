@@ -91,7 +91,17 @@ table.tabuleiro .selected {background-color: #FFFFFF;}
  z-index:1000;
 }
 
+#placar{
+  height: 80px;
+}
 
+#contadorJogadas{
+  height: 80px;
+}
+
+#indicadorTurno{
+  height: 80px;
+}
 
 #CasaToasty
 {
