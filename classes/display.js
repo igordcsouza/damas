@@ -61,14 +61,15 @@ function Display() {
         var linhaHUD = document.createElement("header");
 
         var colPlacar = document.createElement("div");
+        var resultPlacar = document.createElement("div");
         var colContadorJogadas = document.createElement("div");
-        var colIndicadorTurno = document.createElement("div");
 
 
         colPlacar.setAttribute("id", "placar");
+        resultPlacar.setAttribute("id", "resultPlacar");
         colContadorJogadas.setAttribute("id", "contadorJogadas");
-        colIndicadorTurno.setAttribute("id", "indicadorTurno");
-        
+    
+        // PLACAR
         var img_coffee = document.createElement("img");
         img_coffee.setAttribute("class", "coffee");
         img_coffee.src = 'img/preta.png';
@@ -77,8 +78,33 @@ function Display() {
         img_beer.setAttribute("class", "beer");
         img_beer.src = 'img/branca.png';
 
+        var placar_coffee = document.createElement("div");
+        placar_coffee.setAttribute("class", "numero");
+        placar_coffee.setAttribute("id", "placar_coffee");
+        placar_coffee.innerHTML = "3";
+
+        var placar_x = document.createElement("div");
+        placar_x.setAttribute("class", "numero");
+        placar_x.innerHTML = "X";
+
+
+        var placar_beer = document.createElement("div");
+        placar_beer.setAttribute("class", "numero");
+        placar_beer.setAttribute("id", "placar_beer");
+        placar_beer.innerHTML = "3";
+
+
+        resultPlacar.appendChild(placar_coffee);
+        resultPlacar.appendChild(placar_x);
+        resultPlacar.appendChild(placar_beer);
+
         colPlacar.appendChild(img_coffee);
+        colPlacar.appendChild(resultPlacar);
         colPlacar.appendChild(img_beer);
+
+
+
+        //CONTADR DE JOGADAS
 
         var img_contador = document.createElement("img");
         img_contador.setAttribute("class", "coffeeBeer");
@@ -87,7 +113,6 @@ function Display() {
         var txt_contador = document.createElement("div");
         txt_contador.setAttribute("class", "texto");
         txt_contador.innerHTML = "Contador de jogadas sem captura";
-
 
         var cont = document.createElement("div");
         cont.setAttribute("class", "numero");
