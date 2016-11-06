@@ -35,6 +35,8 @@ function Display() {
         AreaHumanoFalando.setAttribute("id", "humanoFalando");
         AreaMakinaFalando.setAttribute("id", "makinaFalando");
         tabela.setAttribute("id", "tabelaDisplay");
+        tabela.setAttribute("class", "table-responsive");
+
 
 
         colhumanoFalando.appendChild(AreaHumanoFalando);
