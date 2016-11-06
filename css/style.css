@@ -120,6 +120,7 @@ header{
 	background-color: #F0D9B5;
 	border: 2px #B58863 solid;
 	margin-right: 20px;
+	float: left;
 
 }
 
@@ -147,14 +148,28 @@ header{
 }
 
 #contadorJogadas img.coffeeBeer{
-	max-width:100%;
-	max-height:100%;
+	max-height:80%;
 	float: right;
 	padding-right: 5%; 
 }
 
-#contadorJogadas span{
-	color: #B58863;
+#contadorJogadas .texto{
+	color: #77573d;
+	text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#contadorJogadas .numero{
+	color: #77573d;
+  float: left;
+  text-align: center;
+  padding-left: 50px;
+  font-size: 38px;
+}
+
+.clear{
+ clear:both;
 }
 
 header {

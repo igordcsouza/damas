@@ -84,11 +84,24 @@ function Display() {
         img_contador.setAttribute("class", "coffeeBeer");
         img_contador.src = 'img/img_contador.png';
 
-        colContadorJogadas.innerHTML = "texto_contador";
+        var txt_contador = document.createElement("div");
+        txt_contador.setAttribute("class", "texto");
+        txt_contador.innerHTML = "Contador de jogadas sem captura";
+
+
+        var cont = document.createElement("div");
+        cont.setAttribute("class", "numero");
+        cont.innerHTML = "20";
+
+        colContadorJogadas.appendChild(txt_contador);
+        colContadorJogadas.appendChild(cont);
         colContadorJogadas.appendChild(img_contador);
 
         linhaHUD.appendChild(colPlacar);
         linhaHUD.appendChild(colContadorJogadas);
+
+        var clear = document.createElement("div");
+        colPlacar.setAttribute("class", "clear");
 
         return linhaHUD
     }
