@@ -24,11 +24,11 @@
             if (usuarioH != null) {
                 clearInterval(thread);
                 document.body.innerHTML = ""; //limpando o body;
+                document.body.appendChild(display.IniciaHUD());
                 document.body.appendChild(display.IniciaDisplayTabuleiro());
                 tb = new Tabuleiro(usuarioH);
             }
         }
-        
     </script>
 </html>
 

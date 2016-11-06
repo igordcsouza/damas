@@ -13,13 +13,8 @@ function Display() {
 
         var centro = document.createElement("center");
         var tabela = document.createElement("table");
-        var linhaHUD = document.createElement("tr");
         var linhaTabuleiro = document.createElement("tr");
         var linhaFala = document.createElement("tr");
-
-        var colPlacar = document.createElement("td");
-        var colContadorJogadas = document.createElement("td");
-        var colIndicadorTurno = document.createElement("td");
 
         var colAnimacaoHumano = document.createElement("td");
         var colTabuleiro = document.createElement("td");
@@ -30,10 +25,6 @@ function Display() {
         var colamakinaFalando = document.createElement("td");
         var AreaHumanoFalando = document.createElement("textarea");
         var AreaMakinaFalando = document.createElement("textarea");
-
-        colPlacar.setAttribute("id", "placar");
-        colContadorJogadas.setAttribute("id", "contadorJogadas");
-        colIndicadorTurno.setAttribute("id", "indicadorTurno");
 
         colAnimacaoHumano.setAttribute("id", "animacaoHumano");
         colAnimacaoHumano.setAttribute("class", "tdAnimacao");
@@ -49,10 +40,6 @@ function Display() {
         colhumanoFalando.appendChild(AreaHumanoFalando);
         colamakinaFalando.appendChild(AreaMakinaFalando);
 
-        linhaHUD.appendChild(colPlacar);
-        linhaHUD.appendChild(colContadorJogadas);
-        linhaHUD.appendChild(colIndicadorTurno);
-
         linhaTabuleiro.appendChild(colAnimacaoHumano);
         linhaTabuleiro.appendChild(colTabuleiro);
         linhaTabuleiro.appendChild(colanimacaoMakina);
@@ -60,14 +47,36 @@ function Display() {
         linhaFala.appendChild(colNula);
         linhaFala.appendChild(colamakinaFalando);
 
-        tabela.appendChild(linhaHUD);
         tabela.appendChild(linhaTabuleiro);
         tabela.appendChild(linhaFala);
 
-        centro.appendChild(tabela);
-        return centro;
+        return tabela;
 
     }
+    this.IniciaHUD = function() {
+
+        var linhaHUD = document.createElement("header");
+
+        var colPlacar = document.createElement("div");
+        var colContadorJogadas = document.createElement("div");
+        var colIndicadorTurno = document.createElement("div");
+
+
+        colPlacar.setAttribute("id", "placar");
+        colContadorJogadas.setAttribute("id", "contadorJogadas");
+        colIndicadorTurno.setAttribute("id", "indicadorTurno");
+        
+
+        linhaHUD.appendChild(colPlacar);
+        linhaHUD.appendChild(colContadorJogadas);
+        linhaHUD.appendChild(colIndicadorTurno);
+
+        linhaHUD.getElementById("placar").prepend('<img src="img/bill.png">');
+        
+
+        return linhaHUD
+    }
+
 
 
     this.IniciaDisplayStart = function () {
