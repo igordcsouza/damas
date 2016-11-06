@@ -53,6 +53,7 @@ function Display() {
         return tabela;
 
     }
+
     this.IniciaHUD = function() {
 
         var linhaHUD = document.createElement("header");
@@ -66,13 +67,25 @@ function Display() {
         colContadorJogadas.setAttribute("id", "contadorJogadas");
         colIndicadorTurno.setAttribute("id", "indicadorTurno");
         
+        var img_coffee = document.createElement("img");
+        img_coffee.setAttribute("class", "coffee");
+        img_coffee.src = 'img/preta.png';
+
+        var img_beer = document.createElement("img");
+        img_beer.setAttribute("class", "beer");
+        img_beer.src = 'img/branca.png';
+
+        colPlacar.appendChild(img_coffee);
+        colPlacar.appendChild(img_beer);
+
+        var img_contador = document.createElement("img");
+        img_contador.setAttribute("class", "coffeeBeer");
+        img_contador.src = 'img/img_contador.png';
+
+        colContadorJogadas.appendChild(img_contador);
 
         linhaHUD.appendChild(colPlacar);
         linhaHUD.appendChild(colContadorJogadas);
-        linhaHUD.appendChild(colIndicadorTurno);
-
-        linhaHUD.getElementById("placar").prepend('<img src="img/bill.png">');
-        
 
         return linhaHUD
     }

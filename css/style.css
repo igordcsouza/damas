@@ -92,18 +92,6 @@ table.tabuleiro .selected {background-color: #FFFFFF;}
 	z-index:1000;
 }
 
-#placar{
-	height: 80px;
-}
-
-#contadorJogadas{
-	height: 80px;
-}
-
-#indicadorTurno{
-	height: 80px;
-}
-
 #CasaToasty {
 	width:300px;
 	height:100%;
@@ -120,25 +108,53 @@ table.tabuleiro .selected {background-color: #FFFFFF;}
 	z-index:10;
 }
 
+header{
+	margin: 10px 5px 10px 5px;
+}
+
 #placar
 {
 	display: inline-block;
-	width: 30%;
+	height: 80px;
+	width: 400px;
 	background-color: #F0D9B5;
+	border: 2px #B58863 solid;
+	margin-right: 20px;
+
+}
+
+#placar img.coffee{
+	max-width:100%;
+	max-height:100%;
+	float: left;
+	padding-left: 6%; 
+}
+
+#placar img.beer{
+	max-width:100%;
+	max-height:100%;
+	float: right;
+	padding-right: 5%; 
 }
 
 #contadorJogadas
 {
 	display: inline-block;
-	width: 30%;
-	backgrond-color: #B58863;
+	height: 80px;
+	width: 250px;
+	background-color: #F0D9B5;
+	border: 2px #B58863 solid;
 }
 
-#indicadorTurno
-{
-	display: inline-block;
-	width: 30%;
-	background-color: #FFFFF8;
+#contadorJogadas img.coffeeBeer{
+	max-width:100%;
+	max-height:100%;
+	float: right;
+	padding-right: 5%; 
+}
+
+header {
+	margin-left: 250px; 
 }
 
 button {top: 100px; left:10px; position:absolute; z-index:1000; width:50px; height:50px;} /* APENAS PARA TESTE TOASTY */</em>
