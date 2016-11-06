@@ -153,6 +153,10 @@ header{
 	padding-right: 5%; 
 }
 
+#contadorJogadas span{
+	color: #B58863;
+}
+
 header {
 	margin-left: 250px; 
 }

@@ -84,6 +84,7 @@ function Display() {
         img_contador.setAttribute("class", "coffeeBeer");
         img_contador.src = 'img/img_contador.png';
 
+        colContadorJogadas.innerHTML = "texto_contador";
         colContadorJogadas.appendChild(img_contador);
 
         linhaHUD.appendChild(colPlacar);
