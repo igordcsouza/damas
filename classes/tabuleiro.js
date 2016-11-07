@@ -10,9 +10,12 @@ function Tabuleiro(humano) {
     var ElementoHtmlTabela = document.createElement("table");
     var ArrElementoHtmlTR = new Array();
     var CasaSelecionada = null;
+    var hud = new HUD();
 
     this.usuHumano = humano;
     this.usuMakina = null;
+
+
     
     /* PRIVATE - Criando o Array de Casas */
     var CriaArrayCasas = function () {
@@ -161,9 +164,10 @@ function Tabuleiro(humano) {
         return true;
     }
 
+    
     /* CONSTRUTOR */
-
     var __construct = function () {
+
 
         CriaArrayCasas();
         MontaTabuleiroHtml();
@@ -174,8 +178,8 @@ function Tabuleiro(humano) {
         IniciaMakina();
 
 
-    } ()
 
+    } ()    
 
     var movimentoIrregular = function(c){
         alert("O movimento que voce esta tentando fazer é considerado irregular.");
