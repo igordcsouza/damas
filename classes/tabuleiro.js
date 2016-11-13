@@ -187,7 +187,6 @@ function Tabuleiro(humano) {
         CasaSelecionada.selected();
     }
 
-
     /* implementar a regra de movimento*/
     var validaMovimento = function (c) {
 
@@ -201,8 +200,45 @@ function Tabuleiro(humano) {
             return false;
         }
 
+        if (CasaSelecionada.getPeca().getDama()) {
+            var z = c.getPosicao().x - CasaSelecionada.getPosicao().x;
+            var cx = c.getPosicao().x;
+            var sx = CasaSelecionada.getPosicao().x;
+            // console.log("--------");
+            // console.log(cx);
+            // console.log(sx);
+            // console.log(z);
+            // console.log(cx == sx+z);
+            // console.log("--------");           
+            var cy = c.getPosicao().y;
+            var sy = CasaSelecionada.getPosicao().y;
+            // console.log("--------");
+            // console.log(cy); //5
+            // console.log(sy); //4
+            // console.log(z); //1
+            // console.log(cy == sy+z);
+            // console.log("--------");
+            if ((cx == sx+z) && (cy == sy-z)) {
+                console.log("Movimento Valido");
+            }
+            else if ((cx == sx+z) && (cy == sy+z)) {
+                console.log("Movimento Valido");
+            }
+            else {
+                movimentoIrregular(c);
+                return false;
+            }
+
+        }
+
         if ((c.getPosicao().x >= CasaSelecionada.getPosicao().x + 2) && (!CasaSelecionada.getPeca().getDama())){
             console.log("O player pulou uma linha. Verificar se foi o caso de comer um peca ou uma jogada irregular.");
+            movimentoIrregular(c);
+            return false;
+        }
+
+        if ((c.getPosicao().x <= CasaSelecionada.getPosicao().x - 2) && (!CasaSelecionada.getPeca().getDama())){
+            
             movimentoIrregular(c);
             return false;
         }
@@ -212,6 +248,7 @@ function Tabuleiro(humano) {
             movimentoIrregular(c);
             return false;
         }
+
 
         // Remover para a validação da dama ser realmente valida
         // Esse código coloca qualquer pedra que encoste na parede esquerda como dama. 
@@ -229,7 +266,7 @@ function Tabuleiro(humano) {
             movimentoIrregular(c);
             return false;
         }
-        
+
         CasaSelecionada.selected()
         c.selected();
         return true;
