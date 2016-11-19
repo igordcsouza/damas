@@ -114,20 +114,25 @@ function Tabuleiro(humano) {
 
 
     function retornaPecaJogavelIa() {
+        var jogadasPossiveis = [];
         for (var i = ArrayCasas.length - 1; i >= 0; i--) {
             for (var j = ArrayCasas[i].length - 1; j >= 0; j--) {
                 if ((ArrayCasas[i][j].getPeca() != null) && (ArrayCasas[i][j].getPeca().Usuario["nome"] != that.usuHumano.nome)) {
                     if (testaMovimentacaoIA(i,j)){
-                        return;
+                        jogadasPossiveis.push([i,j]);
                     }
                 }
             }
         }
+        var peca = jogadasPossiveis[Math.floor(Math.random() * jogadasPossiveis.length)];
+        // console.log(peca[0] + " " + peca[1]);
+        MovimentaPeca(peca[0],peca[1]);
     }
 
     function testaMovimentacaoIA(linha,coluna){
         if ((validaPosicaoIA(linha+1, coluna+1)) || (validaPosicaoIA(linha+1, coluna-1))){
-            return MovimentaPeca(linha,coluna);
+            return true;
+            // return MovimentaPeca(linha,coluna);
         }
     }
 
