@@ -114,25 +114,44 @@ function Tabuleiro(humano) {
 
 
     function retornaPecaJogavelIa() {
+        var fugasObrigatorias = [];
         var jogadasPossiveis = [];
+        var ataqueNecessario = [];
+        var peca;
         for (var i = ArrayCasas.length - 1; i >= 0; i--) {
             for (var j = ArrayCasas[i].length - 1; j >= 0; j--) {
                 if ((ArrayCasas[i][j].getPeca() != null) && (ArrayCasas[i][j].getPeca().Usuario["nome"] != that.usuHumano.nome)) {
-                    if (testaMovimentacaoIA(i,j)){
+                    if (testaMovimentacaoIA(i,j) == 1){
                         jogadasPossiveis.push([i,j]);
+                    }
+                    if (testaMovimentacaoIA(i,j) == 2) {
+                        ataqueNecessario.push([i,j]);
                     }
                 }
             }
         }
-        var peca = jogadasPossiveis[Math.floor(Math.random() * jogadasPossiveis.length)];
-        // console.log(peca[0] + " " + peca[1]);
+        if (fugasObrigatorias.length > 0) {
+            peca = fugasObrigatorias[Math.floor(Math.random() * fugasObrigatorias.length)];
+        }
+        else if (ataqueNecessario.length > 0){
+            peca = ataqueNecessario[Math.floor(Math.random() * ataqueNecessario.length)];
+        }
+        else if (jogadasPossiveis.length > 0){
+            peca = jogadasPossiveis[Math.floor(Math.random() * jogadasPossiveis.length)];
+        }
         MovimentaPeca(peca[0],peca[1]);
     }
 
     function testaMovimentacaoIA(linha,coluna){
         if ((validaPosicaoIA(linha+1, coluna+1)) || (validaPosicaoIA(linha+1, coluna-1))){
-            return true;
+            return 1;
             // return MovimentaPeca(linha,coluna);
+        }
+        if (validaMovimentoCapturaSimples(linha,coluna)) {
+            return 2;
+        }
+        if (validaMovimentoDefesa(linha,coluna)){
+            return 3;
         }
     }
 
@@ -143,6 +162,23 @@ function Tabuleiro(humano) {
         else {
             return false;
         }
+    }
+
+    function validaMovimentoDefesa(linha,coluna){
+        return false;
+    }
+    function validaMovimentoCapturaSimples(linha,coluna){
+        return false;   
+    //     console.log(ArrayCasas[linha+2][coluna+2] == null);
+    //     if (ArrayCasas[linha+2][coluna+2] == null){
+    //         if (ArrayCasas[linha+1][coluna+1] != null) {
+    //             console.log("movimentoCaptura");
+    //             console.log(linha + " " + coluna + " --- ");
+    //             console.log(ArrayCasas[linha+1][coluna+1].getPeca().Usuario);
+    //             console.log(that.usuHumano);
+    //             console.log("fimMovimentoCaptura");
+    //         }
+    //     }
     }
 
 
