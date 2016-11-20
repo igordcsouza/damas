@@ -1,48 +1,185 @@
+/*
 #tabuleiro{
-   width:404px;
-   height:404px;
-   border:solid 2px #89664a;
-   margin: 20 auto;
+   width:400px;
+   height:400px;
+   border:solid 1px;
 }
-
 .linha{  
    height:50px;
 }
-
 .casa{
    width:50px;
    height:100%;   
    float:left;
    cursor: pointer;
 }
-
 .casa_branca{
-   background-color: #F0D9B5;
+   background-color: #fff;
 }
-
 .casa_preta{
-   background-color: #B58863;
+   background-color: #000;
 }
-
 .casa_selecionada{
    background-color: #FF0000;
 }
-
 .peca {
-   width: 50px;
-   height: 100%;
+ width: 50px;
+ height: 100%;
+ } */
+
+*, html, body {padding:0px; margin:0px;} 
+#tabelaDisplay {}
+body {
 }
 
-.avatar{
-   border:solid 1px #89664a;
-   width: 100px;
-   height:100px;
+
+h2 {display:inline-block; padding:20px;}
+
+textarea{ resize: none;}
+img.imgHumano {
+	margin-right: 45px;
+}
+img.imgMakina {
+	margin-left: 45px;
 }
 
-#cronometro{
+#humanoFalando, #makinaFalando {
+	font-family: "Comic Sans MS";
+	font-size: 22px;
+	color: gray;
+	width: 280px;
+	height: 200px;
+	border: 0px;
+	font-weight: bold;
+}
+#humanoFalando {
+	text-align: right;
+}
+
+td.tdAnimacao {width:300px; max-width:300px; vertical-align:bottom;}
+
+#animacaoHumano {
+	text-align: right;
+}
+
+#animacaoMakina {
+	text-align: left;
+}
+
+table.tabuleiro, table.tabuleiro td { border: 2px solid #89664a; border-collapse: collapse; }
+table.tabuleiro td {width:70px; height:70px; text-align:center;   max-width: 70px; max-height: 70px; }
+
+
+/*COLORINDO*/
+table.tabuleiro td {background-color:#F0D9B5;} 
+table.tabuleiro .cor {background-color:#B58863;}
+table.tabuleiro .selected {background-color: #FFFFFF;}
+
+#divcentro 
+{
+	margin-top:50px;
+	width:1200px;
+	position:absolute;
+	left:50%;
+	margin-left:-600px;
+	/* background-color:Aqua;*/
+	z-index:1000;
+}
+
+#CasaToasty {
+	width:300px;
+	height:100%;
+	position: absolute;
+	z-index:1;
+}
+
+#Toasty {
+	height:250px;
+	width:250px;
+	position: absolute;
+	bottom: 0;
+	left: -250;
+	z-index:10;
+}
+
+header{
+	margin: 10px 5px 10px 250px;
+}
+
+#placar
+{
+	display: inline-block;
+	height: 80px;
+	width: 400px;
+	background-color: #F0D9B5;
+	border: 2px #B58863 solid;
+	margin-right: 20px;
+	float: left;
 
 }
 
-.top-buffer { 
-   margin-top:100px; 
+#placar img.coffee{
+	max-width:100%;
+	max-height:100%;
+	float: left;
+	padding-left: 6%; 
 }
+
+#placar img.beer{
+	max-width:100%;
+	max-height:100%;
+	float: right;
+	padding-right: 5%; 
+}
+
+#placar #resultPlacar {
+	float: left;
+
+	text-align: center;
+}
+
+#placar .numero{
+	float: left;
+	color: #77573d;
+  text-align: center;
+  font-size: 38px; 
+  padding: 10px 0 0 30px;
+}
+
+
+#contadorJogadas
+{
+	display: inline-block;
+	height: 80px;
+	width: 250px;
+	background-color: #F0D9B5;
+	border: 2px #B58863 solid;
+}
+
+#contadorJogadas img.coffeeBeer{
+	max-height:80%;
+	float: right;
+	padding-right: 5%; 
+}
+
+#contadorJogadas .texto{
+	color: #77573d;
+	text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#contadorJogadas .numero{
+	color: #77573d;
+  float: left;
+  text-align: center;
+  padding-left: 50px;
+  font-size: 38px;
+}
+
+.clear{
+ clear:both;
+}
+
+
+button {top: 100px; left:10px; position:absolute; z-index:1000; width:50px; height:50px;} /* APENAS PARA TESTE TOASTY */</em>

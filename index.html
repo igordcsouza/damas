@@ -1,40 +1,40 @@
 <html lang="pt-br">
 <head>
- 	<meta charset="UTF-8" />
- 	<title>Damas ES2</title>
-	<link rel="stylesheet" href="css/style.css" type="text/css"/>
-	<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src="js/tabuleiro.js"></script>
+    <script type="text/javascript" src="classes/usuarios.js"></script>
+    <script type="text/javascript" src="classes/display.js"></script>
+    <!-- <script type="text/javascript" src="classes/casa_peca_posicao.js"></script> -->
+    <script type="text/javascript" src="classes/tabuleiro.js"></script>
+    <script type="text/javascript" src="classes/casa.js"></script>
+    <script type="text/javascript" src="classes/peca.js"></script>
+    <script type="text/javascript" src="classes/posicao.js"></script>
+    <script type="text/javascript" src="classes/hud.js"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+
+    <script   src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
 </head>
 <body>
-	<div class="container">
-		<div class="row">
-			<div ng-view class="col-xs-8 content">
-				<div id="tabuleiro">
-				</div>
-				</br>
-		   		<button type="button" class="btn btn-default">Regras</button>
-			</div>
-			<div ng-view class="col-xs-4 content">
-				<div class="row top-buffer">
-					<div class="col-xs-12"><div class="avatar">Player 1</div></div>
-				</div>
-				<div class="row">
-	                <div class="col-xs-12"><div id="cronometro">00:00:00</div></div>
-	            </div>
-	            <div class="row">
-	                <div class="col-xs-12"><div class="avatar">Player 2</div></div>
-	            </div>
-			</div>
-	    </div>
-	</div>
-
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.js"></script>
-
 </body>
+    <script type="text/javascript">
+        var tb;
+        var thread = setInterval(verificaClick, 800);
+        var usuarioH;
+        var display = new Display();
+        document.body.appendChild(display.IniciaDisplayStart());
+        
+        function verificaClick() {
+            usuarioH = display.getUsuarioSelecionado();
+            // console.log(usuarioH);
+            if (usuarioH != null) {
+                clearInterval(thread);
+                document.body.innerHTML = ""; //limpando o body;
+                document.body.appendChild(display.IniciaHUD());
+                document.body.appendChild(display.IniciaDisplayTabuleiro());
+                tb = new Tabuleiro(usuarioH);
+            }
+        }
+    </script>
 </html>
