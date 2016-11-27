@@ -3,6 +3,7 @@ function Display() {
     var selecionado = null;
     var bill = new Bill();
     var jobs = new Jobs();
+    var jogadasSemCaptura = 20;
 
     this.getUsuarioSelecionado = function () {
         return selecionado;
@@ -81,7 +82,7 @@ function Display() {
         var placar_coffee = document.createElement("div");
         placar_coffee.setAttribute("class", "numero");
         placar_coffee.setAttribute("id", "placar_coffee");
-        placar_coffee.innerHTML = "3";
+        placar_coffee.innerHTML = "0";
 
         var placar_x = document.createElement("div");
         placar_x.setAttribute("class", "numero");
@@ -91,7 +92,7 @@ function Display() {
         var placar_beer = document.createElement("div");
         placar_beer.setAttribute("class", "numero");
         placar_beer.setAttribute("id", "placar_beer");
-        placar_beer.innerHTML = "3";
+        placar_beer.innerHTML = "0";
 
 
         resultPlacar.appendChild(placar_coffee);
@@ -116,7 +117,7 @@ function Display() {
 
         var cont = document.createElement("div");
         cont.setAttribute("class", "numero");
-        cont.innerHTML = "20";
+        cont.innerHTML = jogadasSemCaptura;
 
         colContadorJogadas.appendChild(txt_contador);
         colContadorJogadas.appendChild(cont);
