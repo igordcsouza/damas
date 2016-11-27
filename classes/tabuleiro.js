@@ -205,6 +205,7 @@ function Tabuleiro(humano) {
         return true;
     }
 
+
     
     /* CONSTRUTOR */
     var __construct = function () {
@@ -228,37 +229,69 @@ function Tabuleiro(humano) {
         CasaSelecionada.selected();
     }
 
+
+    function validaCapturaEsquerda(c) {
+        var coluna = CasaSelecionada.getPosicao().x - 1; 
+        var linha = CasaSelecionada.getPosicao().y - 1;
+        var c_aux = ArrayCasas[linha][coluna];
+
+        console.log(linha);
+        console.log(coluna);
+        console.log(c_aux.getPeca().Usuario);
+        console.log(CasaSelecionada.getPeca().Usuario);
+        if (CasaSelecionada.getPeca().Usuario != c_aux.getPeca().Usuario) {
+            // ArrayCasas[linha][coluna].LimpaCasa();
+            c_aux.LimpaCasa();
+            console.log("deveria limpar");
+            c.selected();
+            CasaSelecionada.selected();
+            return true;
+        }
+        c_aux = null;
+        linha = null;
+        coluna = null;
+        return false;
+    }
+
+    function validaCapturaDireita(c){
+        var coluna = CasaSelecionada.getPosicao().x + 1; 
+        var linha = CasaSelecionada.getPosicao().y - 1;
+        var c_aux = ArrayCasas[linha][coluna];
+
+        console.log(linha);
+        console.log(coluna);
+        console.log(c_aux.getPeca().Usuario);
+        console.log(CasaSelecionada.getPeca().Usuario);
+        if (CasaSelecionada.getPeca().Usuario != c_aux.getPeca().Usuario) {
+            // ArrayCasas[linha][coluna].LimpaCasa();
+            c_aux.LimpaCasa();
+            console.log("deveria limpar");
+            c.selected();
+            CasaSelecionada.selected();
+            return true;
+        }
+        c_aux = null;
+        linha = null;
+        coluna = null;
+        return false;
+    }
+
     /* implementar a regra de movimento*/
     var validaMovimento = function (c) {
-
         if (c.getPeca() != null) {   //Verificando se a casa de destino está sem peça
             movimentoIrregular(c);
             return false;
         }
-
         if (c.getPosicao().x == CasaSelecionada.getPosicao().x || c.getPosicao().y == CasaSelecionada.getPosicao().y) {   //Verificando movimentacao lateral
             movimentoIrregular(c);
             return false;
         }
-
         if (CasaSelecionada.getPeca().getDama()) {
             var z = c.getPosicao().x - CasaSelecionada.getPosicao().x;
             var cx = c.getPosicao().x;
             var sx = CasaSelecionada.getPosicao().x;
-            // console.log("--------");
-            // console.log(cx);
-            // console.log(sx);
-            // console.log(z);
-            // console.log(cx == sx+z);
-            // console.log("--------");           
             var cy = c.getPosicao().y;
             var sy = CasaSelecionada.getPosicao().y;
-            // console.log("--------");
-            // console.log(cy); //5
-            // console.log(sy); //4
-            // console.log(z); //1
-            // console.log(cy == sy+z);
-            // console.log("--------");
             if ((cx == sx+z) && (cy == sy-z)) {
                 console.log("Movimento Valido");
             }
@@ -273,23 +306,27 @@ function Tabuleiro(humano) {
         }
 
         if ((c.getPosicao().x >= CasaSelecionada.getPosicao().x + 2) && (!CasaSelecionada.getPeca().getDama())){
-            console.log("O player pulou uma linha. Verificar se foi o caso de comer um peca ou uma jogada irregular.");
+            if (c.getPosicao().x == CasaSelecionada.getPosicao().x + 2) {
+                return validaCapturaDireita(c);
+            }
+            console.log("O player pulou uma linha. Verificar se foi o caso de comer um peca ou uma jogada irregular. 1");
             movimentoIrregular(c);
-            return false;
+            return false;            
         }
 
         if ((c.getPosicao().x <= CasaSelecionada.getPosicao().x - 2) && (!CasaSelecionada.getPeca().getDama())){
-            
+            if (c.getPosicao().x == CasaSelecionada.getPosicao().x - 2) {
+                return validaCapturaEsquerda(c);
+            }
             movimentoIrregular(c);
             return false;
         }
 
         if (((c.getPosicao().y >= CasaSelecionada.getPosicao().y +2) || (c.getPosicao().y <= CasaSelecionada.getPosicao().y -2)) && (!CasaSelecionada.getPeca().getDama())){
-            console.log("O player pulou uma coluna. Verificar se foi caso de comer uma peca ou uma jogada irregular.");
+            console.log("O player pulou uma coluna. Verificar se foi caso de comer uma peca ou uma jogada irregular. 2");
             movimentoIrregular(c);
             return false;
         }
-
 
         // Remover para a validação da dama ser realmente valida
         // Esse código coloca qualquer pedra que encoste na parede esquerda como dama. 
@@ -312,6 +349,8 @@ function Tabuleiro(humano) {
         c.selected();
         return true;
     }
+
+
 
 
     this.Movimenta = function (casa) {
