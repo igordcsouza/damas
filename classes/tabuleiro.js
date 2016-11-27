@@ -145,7 +145,6 @@ function Tabuleiro(humano) {
     function testaMovimentacaoIA(linha,coluna){
         if ((validaPosicaoIA(linha+1, coluna+1)) || (validaPosicaoIA(linha+1, coluna-1))){
             return 1;
-            // return MovimentaPeca(linha,coluna);
         }
         if (validaMovimentoCapturaSimples(linha,coluna)) {
             return 2;
@@ -245,6 +244,7 @@ function Tabuleiro(humano) {
             console.log("deveria limpar");
             c.selected();
             CasaSelecionada.selected();
+            addPontosPreto();
             return true;
         }
         c_aux = null;
@@ -268,6 +268,7 @@ function Tabuleiro(humano) {
             console.log("deveria limpar");
             c.selected();
             CasaSelecionada.selected();
+            addPontosPreto();
             return true;
         }
         c_aux = null;
@@ -384,6 +385,10 @@ function Tabuleiro(humano) {
     }
 
 
+    function addPontosPreto(){
+        var td = document.getElementById("placar_coffee");
+        td.textContent = Number(td.textContent) + 1;
+    }
 
     var Anima = function (usu, texto) {
     
