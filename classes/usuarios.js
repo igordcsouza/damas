@@ -18,10 +18,19 @@ Usuario.prototype.ImagemPeca = function () {
     img.setAttribute("src", this.imgPeca);
     img.setAttribute("width", "65");
     img.setAttribute("height", "65");
-    img.setAttribute("id",Math.random().toString(36).substring(7));
     img.setAttribute("onclick", "colorirPecaSelecionada();");
     return img;
 };
+
+
+Usuario.prototype.ImagemPecaDama = function() {
+  var img = document.createElement("img");
+    img.setAttribute("src", this.imgPecaDama);
+    img.setAttribute("width", "65");
+    img.setAttribute("height", "65");
+    img.setAttribute("onclick", "colorirPecaSelecionada();");
+    return img;  
+}
 
 Usuario.prototype.ImagemFace = function () {
     var img = document.createElement("img");
@@ -52,17 +61,19 @@ Usuario.prototype.MsgErroPecaErrada = function () {
 
 
 function Jobs() {
-    this.nome = "jobs";
-    this.imgPeca = "img/branca.png";
-    this.imgFaceAnima = "img/jobsAnima.gif";
-    this.imgFace = "img/branca.png";
+    this.nome           = "jobs";
+    this.imgPeca        = "img/branca.png";
+    this.imgPecaDama    = "img/brancaDama.png";
+    this.imgFaceAnima   = "img/jobsAnima.gif";
+    this.imgFace        = "img/branca.png";
 }
 
 function Bill() {
-    this.nome = "bill";
-    this.imgPeca = "img/preta.png";
-    this.imgFaceAnima = "img/billAnima.gif";
-    this.imgFace = "img/preta.png";
+    this.nome           = "bill";
+    this.imgPeca        = "img/preta.png";
+    this.imgPecaDama    = "img/pretaDama.png";
+    this.imgFaceAnima   = "img/billAnima.gif";
+    this.imgFace        = "img/preta.png";
 }
 
 

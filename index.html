@@ -2,93 +2,19 @@
 <head>
     <script type="text/javascript" src="classes/usuarios.js"></script>
     <script type="text/javascript" src="classes/display.js"></script>
-    <script type="text/javascript" src="classes/casa_peca_posicao.js"></script>
+    <!-- <script type="text/javascript" src="classes/casa_peca_posicao.js"></script> -->
     <script type="text/javascript" src="classes/tabuleiro.js"></script>
-    <style type="text/css">
-        *, html, body {padding:0px; margin:0px;} 
-        #tabelaDisplay {}
-        body {
+    <script type="text/javascript" src="classes/casa.js"></script>
+    <script type="text/javascript" src="classes/peca.js"></script>
+    <script type="text/javascript" src="classes/posicao.js"></script>
+    <script type="text/javascript" src="classes/hud.js"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
 
-           /* background-color:red;*/
-        }
+    <script   src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
 
-        h2 {display:inline-block; padding:20px;}
-        
-        textarea{ resize: none;}
-        img.imgHumano {
-            margin-right: 45px;
-        }
-        img.imgMakina {
-            margin-left: 45px;
-        }
-
-        #humanoFalando, #makinaFalando {
-            font-family: "Comic Sans MS";
-            font-size: 22px;
-            color: gray;
-            width: 280px;
-            height: 200px;
-            border: 0px;
-            font-weight: bold;
-        }
-        #humanoFalando {
-            text-align: right;
-        }
-        
-        td.tdAnimacao {width:300px; max-width:300px; vertical-align:bottom;}
-        
-        #animacaoHumano {
-            text-align: right;
-        }
-
-        #animacaoMakina {
-            text-align: left;
-        }
-        
-        table.tabuleiro, table.tabuleiro td { border: 3px solid black; border-collapse: collapse; }
-        table.tabuleiro td {width:70px; height:70px; text-align:center;   max-width: 70px; max-height: 70px; }
-        
-        
-        /*COLORINDO*/
-        table.tabuleiro td {background-color:Silver;} 
-        table.tabuleiro .cor {background-color:Black;}
-        
-        #divcentro 
-        {
-            margin-top:50px;
-	        width:1200px;
-	        position:absolute;
-	        left:50%;
-	        margin-left:-600px;
-	       /* background-color:Aqua;*/
-	       z-index:1000;
-	    }
-        
-        
-        
-        #CasaToasty
-        {
-          width:300px;
-          height:100%;
-          position: absolute;
-          z-index:1;
- 
-        }
-        #Toasty
-        {
-          height:250px;
-          width:250px;
-          position: absolute;
-          bottom: 0;
-          left: -250;
-           z-index:10;
-
-        }
-                
-        button {top: 100px; left:10px; position:absolute; z-index:1000; width:50px; height:50px;} /* APENAS PARA TESTE TOASTY */
-        
-    </style>
-    
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
 </head>
 <body>
 </body>
@@ -101,14 +27,15 @@
         
         function verificaClick() {
             usuarioH = display.getUsuarioSelecionado();
+            // console.log(usuarioH);
             if (usuarioH != null) {
                 clearInterval(thread);
                 document.body.innerHTML = ""; //limpando o body;
+                document.body.appendChild(display.IniciaHUD());
                 document.body.appendChild(display.IniciaDisplayTabuleiro());
                 tb = new Tabuleiro(usuarioH);
             }
         }
-        
     </script>
 </html>
 
