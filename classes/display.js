@@ -11,9 +11,7 @@ function Display() {
 
     this.IniciaDisplayTabuleiro = function () {
 
-        var placar = document.createElement("h4");
-        var divcentro = document.createElement("div");
-        var center = document.createElement("center");
+        var centro = document.createElement("center");
         var tabela = document.createElement("table");
         var linhaTabuleiro = document.createElement("tr");
         var linhaFala = document.createElement("tr");
@@ -23,7 +21,7 @@ function Display() {
         var colanimacaoMakina = document.createElement("td");
 
         var colhumanoFalando = document.createElement("td");
-        var colPlacar = document.createElement("td");
+        var colNula = document.createElement("td");
         var colamakinaFalando = document.createElement("td");
         var AreaHumanoFalando = document.createElement("textarea");
         var AreaMakinaFalando = document.createElement("textarea");
@@ -33,30 +31,26 @@ function Display() {
         colTabuleiro.setAttribute("id", "TDtabuleiro");
         colanimacaoMakina.setAttribute("id", "animacaoMakina");
         colanimacaoMakina.setAttribute("class", "tdAnimacao");
-        placar.setAttribute("id", "placar")
 
         AreaHumanoFalando.setAttribute("id", "humanoFalando");
         AreaMakinaFalando.setAttribute("id", "makinaFalando");
-        //tabela.setAttribute("id", "tabelaDisplay");
+        tabela.setAttribute("id", "tabelaDisplay");
 
-        divcentro.setAttribute("id", "divcentro");
 
-        colPlacar.appendChild(placar);
         colhumanoFalando.appendChild(AreaHumanoFalando);
         colamakinaFalando.appendChild(AreaMakinaFalando);
         linhaTabuleiro.appendChild(colAnimacaoHumano);
         linhaTabuleiro.appendChild(colTabuleiro);
         linhaTabuleiro.appendChild(colanimacaoMakina);
         linhaFala.appendChild(colhumanoFalando);
-        linhaFala.appendChild(colPlacar);
+        linhaFala.appendChild(colNula);
         linhaFala.appendChild(colamakinaFalando);
 
         tabela.appendChild(linhaTabuleiro);
         tabela.appendChild(linhaFala);
 
-        center.appendChild(tabela);
-        divcentro.appendChild(center);
-        return divcentro;
+        centro.appendChild(tabela);
+        return centro;
 
     }
 
@@ -103,6 +97,7 @@ function Display() {
         };
 
         return display;
+
     }
 };
 

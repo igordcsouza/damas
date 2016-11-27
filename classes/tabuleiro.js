@@ -16,37 +16,47 @@ function Tabuleiro(humano) {
     
     /* PRIVATE - Criando o Array de Casas */
     var CriaArrayCasas = function () {
-        for (var i = 0; i < 64; i++) {
-            ArrayCasas[i] = new Casa(i);
-            ArrayCasas[i].setTabuleiro(that);
+        for (var i = 0; i < 8; i++) {
+            ArrayCasas[i] = new Array();
+            for (var j = 0; j < 8; j++) {
+                ArrayCasas[i][j] = new Casa();
+                ArrayCasas[i][j].setPosicao(new Posicao(i, j));
+                ArrayCasas[i][j].setTabuleiro(that);
+            }
         }
     };
     
     /* PRIVATE - Montando a Tabela em HTML */
     var MontaTabuleiroHtml = function () {
-        var tr;
+
         ElementoHtmlTabela.setAttribute("class", "tabuleiro");
-        for (var i = 0; i < 64; i++) {
-            if (i % 8 == 0) {
-                tr = i / 8;
-                ArrElementoHtmlTR[tr] = document.createElement("tr");
-                ElementoHtmlTabela.appendChild(ArrElementoHtmlTR[tr]);
+
+        for (var i = 0; i < 8; i++) {
+            ArrElementoHtmlTR[i] = document.createElement("tr");
+            for (var j = 0; j < 8; j++) {
+                ArrayCasas[i][j].setTD(document.createElement("td"));
+                ArrayCasas[i][j].setTR(ArrElementoHtmlTR[i]);
+                ArrayCasas[i][j].getTR().appendChild(ArrayCasas[i][j].getTD());
             }
-            ArrayCasas[i].setTD(document.createElement("td"));
-            ArrayCasas[i].setTR(ArrElementoHtmlTR[tr]);
-            ArrayCasas[i].getTR().appendChild(ArrayCasas[i].getTD());
+            ElementoHtmlTabela.appendChild(ArrElementoHtmlTR[i]);
         }
+
         document.getElementById("TDtabuleiro").appendChild(ElementoHtmlTabela);
     };
     
     /* PRIVATE - Adiciando as Classe as TD para colorir */
     var ColoreTabuleiro = function () {
-        var x = true;
-        for (var i = 0; i < 63; i = i + 8) {
-            x = !x;
+        for (var i = 0; i < 8; i++) {
             for (var j = 0; j < 8; j++) {
-                if (((i + j) % 2 == 0) == x) {
-                    ArrayCasas[(i + j)].setCor("cor");
+                if ((i % 2) == 0) {
+                    if ((j % 2) == 0) {
+                        ArrayCasas[i][j].setCor("cor");
+
+                    }
+                }else {
+                    if (!(j % 2) == 0) {
+                        ArrayCasas[i][j].setCor("cor");
+                    }
                 }
             }
         }
@@ -54,16 +64,15 @@ function Tabuleiro(humano) {
 
     /*  PRIVATE - Distribuindo as pecas */
     var DistribuiPecas = function () {
-        var x = true;
-        for (var i = 0; i < 24; i = i + 8) {
-            x = !x;
+        for (var i = 0; i < 3; i++) {
             for (var j = 0; j < 8; j++) {
-                if ((j % 2 == 0) == x) {
-                    ArrayCasas[i + j].setPeca(new Peca(that.usuMakina));
+                if (((i % 2) == 0) && ((j % 2) == 1)) {
+                    ArrayCasas[i][j - 1].setPeca(new Peca(that.usuMakina));
+                    ArrayCasas[i + 5][j].setPeca(new Peca(that.usuHumano));
                 }
-
-                if ((j % 2 == 0) == !x) {
-                    ArrayCasas[i + j + 40].setPeca(new Peca(that.usuHumano));
+                if (((i % 2) == 1) && ((j % 2) == 0)) {
+                    ArrayCasas[i][j + 1].setPeca(new Peca(that.usuMakina));
+                    ArrayCasas[i + 5][j].setPeca(new Peca(that.usuHumano));
                 }
             }
         }
@@ -93,45 +102,6 @@ function Tabuleiro(humano) {
     }
 
 
-    var IniciaToasty = function () {
-
-        var casatoasty = document.createElement("div");
-        casatoasty.setAttribute("id", "CasaToasty");
-
-        var toasty = document.createElement("div");
-        toasty.setAttribute("id", "Toasty");
-        
-        var img = document.createElement("img");
-        img.setAttribute("src", "imagens/toasty-flat.png");
-        img.setAttribute("width", "250px");
-        img.setAttribute("height", "250px");
-
-        toasty.appendChild(img);
-        casatoasty.appendChild(toasty);
-       
-        document.body.appendChild(casatoasty);
-
-    }
-
-    var InimaToasty = function () {
-        var elem = document.getElementById("Toasty");
-        var pos = -250;
-        var thread = setInterval(frame, 1);
-        function frame() {
-            if (pos > 0) {
-                if (pos > 1000) { // tempo de espera na tela
-                    elem.style.left = "-250px";
-                    clearInterval(thread);
-                }
-
-            } else {
-                elem.style.left = pos + 'px';
-            }
-            pos = pos + 7;
-        }
-    }
-
-
     var IniciaMakina = function () {
         var count = 1;
         var c = setInterval(function () {
@@ -141,7 +111,8 @@ function Tabuleiro(humano) {
                 console.log("IA JOGANDO");
             } else {
                 if (count == 12) {
-                    Anima(that.usuMakina, "Vão bora, porra!");
+                    // Removendo a animaÃ§Ã£o - Anima();
+                    // Anima(that.usuMakina, "Bora, bora, bora!");
                     count = 0;
                 }
             }
@@ -151,59 +122,74 @@ function Tabuleiro(humano) {
 
     /* CONSTRUTOR */
 
-   
+    var __construct = function () {
+
+        CriaArrayCasas();
+        MontaTabuleiroHtml();
+        ColoreTabuleiro();
+        InicializaParticipantes();
+        DistribuiPecas();
+
+        IniciaMakina();
 
 
+    } ()
 
+
+    var movimentoIrregular = function(){
+        alert("O movimento que voce esta tentando fazer Ã© considerado irregular.");
+    }
 
 
     /* implementar a regra de movimento*/
     var validaMovimento = function (c) {
 
-        var resul = c.Id - CasaSelecionada.Id;
+        if (c.getPeca() != null) {   //Verificando se a casa de destino estÃ¡ sem peÃ§a
+            movimentoIrregular();
+            return false;
+        }
 
-        if (c.getPeca() != null) {   //Verificando se a casa de destino está sem peça
+        if (c.getPosicao().x == CasaSelecionada.getPosicao().x || c.getPosicao().y == CasaSelecionada.getPosicao().y) {   //Verificando movimentacao lateral
+            movimentoIrregular();
             return false;
         }
-                
-        if (Math.abs(resul) != 7 && Math.abs(resul) != 9 && Math.abs(resul) != 14 && Math.abs(resul) != 18) {   //Verificando movimentacao lateral
+
+        if (c.getPosicao().x >= CasaSelecionada.getPosicao().x + 2){
+            console.log("O player pulou uma linha. Verificar se foi o caso de comer um peca ou uma jogada irregular.");
+            movimentoIrregular();
             return false;
         }
-        
-        if (Math.abs(resul) == 14 || Math.abs(resul) == 18) {   
-            /*  VERIFICANDO SE A CASA ENTRE A CASA DE ORIGEM E A CASA DE DESTINO ESTA COM UMA PECA DO ADVERSARIO  */
-            if (ArrayCasas[CasaSelecionada.Id + (resul / 2)].getPeca() == null || ArrayCasas[CasaSelecionada.Id + (resul / 2)].getPeca().Usuario.nome == that.usuHumano.nome) {
-                return false;
-            }
+
+        if ((c.getPosicao().y >= CasaSelecionada.getPosicao().y +2) || (c.getPosicao().y <= CasaSelecionada.getPosicao().y -2)){
+            console.log("O player pulou uma coluna. Verificar se foi caso de comer uma peca ou uma jogada irregular.");
+            movimentoIrregular();
+            return false;
         }
-        
+
         return true;
     }
 
 
     this.Movimenta = function (casa) {
-
-        //InimaToasty(); // SOMENTE PARA TESTAR 
-
         if (CasaSelecionada != null) {
             if (validaMovimento(casa)) {
+                console.log("De:(" + CasaSelecionada.getPosicao().y + "-" + CasaSelecionada.getPosicao().x + ") Para:(" + casa.getPosicao().y + "-" + casa.getPosicao().x + ")");
                 casa.setPeca(CasaSelecionada.getPeca());
                 CasaSelecionada.LimpaCasa();
-                AtualizaPlacar(); 
-
             } else {
+                //Anima(CasaSelecionada.getPeca().Usuario, "Como vocÃª Ã© burro!! aprende a jogar damas!"); 
                 Anima(that.usuMakina, that.usuMakina.MsgErroValidacao());  // A maquina na vai cometer erros de validacao, logo podemos marretar o usuario aqui
             }
             CasaSelecionada = null;
         } else {
 
             if (casa.getPeca() == null) {
-                Anima(that.usuMakina, that.usuMakina.MsgErroPecaVazia());
+                Anima(that.usuMakina, that.usuMakina.MsgErroPecaVazia());  // A maquina na vai cometer erros de validacao, logo podemos marretar o usuario aqui
                 return;
             }
 
             if (casa.getPeca().Usuario.tdFala != that.usuHumano.tdFala) {
-                Anima(that.usuMakina, that.usuMakina.MsgErroPecaErrada());
+                Anima(that.usuMakina, that.usuMakina.MsgErroPecaErrada());  // A maquina na vai cometer erros de validacao, logo podemos marretar o usuario aqui
                 return;
             }
 
@@ -213,55 +199,22 @@ function Tabuleiro(humano) {
 
 
 
-    var Anima = function (usu, texto) {
-    
-        var td = document.getElementById(usu.tdAnimacao);
-        td.innerHTML = "";                          //Removendo a Imagem Anterior
-        td.appendChild(usu.ImagemFaceAnima());
-        
-        document.getElementById(usu.tdFala).value = "";
-        document.getElementById(usu.tdFala).value = texto
-
-        setTimeout(function myFunction() {
-            td.innerHTML = "";
-            td.appendChild(usu.ImagemFace());
-            document.getElementById(usu.tdFala).value = "";
-        }, 3000);
-    }
-
-    var AtualizaPlacar = function () {
-        var qtdpecasHumano = 0;
-        var qtdpecasMakina = 0;
-
-        for (var i = 0; i < 64; i++) {
-            if (ArrayCasas[i].getPeca() != null) {
-                if (ArrayCasas[i].getPeca().Usuario.nome == that.usuHumano.nome) {
-                    qtdpecasHumano++;
-                } else {
-                    qtdpecasMakina++;
-                }
-            }
-        }
-
-       document.getElementById("placar").appendChild(document.createTextNode("Você " + (12 - qtdpecasMakina) + " X " + (12 - qtdpecasHumano) + " Computador"));
-    }
-
-
-    var __construct = function () {
-
-        CriaArrayCasas();
-        MontaTabuleiroHtml();
-        ColoreTabuleiro();
-        InicializaParticipantes();
-        DistribuiPecas();
-        IniciaToasty();
-        //IniciaMakina();
-        AtualizaPlacar();
-
-
-    } ()
-
-
+    // var Anima = function (usu, texto) {
+    //
+    //     var td = document.getElementById(usu.tdAnimacao);
+    //     td.innerHTML = "";                          //Removendo a Imagem Anterior
+    //     td.appendChild(usu.ImagemFaceAnima());
+    //
+    //
+    //     document.getElementById(usu.tdFala).value = "";
+    //     document.getElementById(usu.tdFala).value = texto
+    //
+    //     setTimeout(function myFunction() {
+    //         td.innerHTML = "";
+    //         td.appendChild(usu.ImagemFace());
+    //         document.getElementById(usu.tdFala).value = "";
+    //     }, 3000);
+    // }
 
 }
 
