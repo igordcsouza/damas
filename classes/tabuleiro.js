@@ -352,7 +352,39 @@ function Tabuleiro(humano) {
     }
 
 
-
+    var movimentoAtaque = function (casa) {
+        console.log("------");
+        var casaDireita = ArrayCasas[casa.getPosicao().y -1][casa.getPosicao().x + 1].getPeca();
+        var casaEsquerda = ArrayCasas[casa.getPosicao().y -1][casa.getPosicao().x - 1].getPeca();
+        var casaDownEsquerda = ArrayCasas[casa.getPosicao().y +1][casa.getPosicao().x - 1].getPeca();
+        var casaDownDireita = ArrayCasas[casa.getPosicao().y +1][casa.getPosicao().x + 1].getPeca();
+        console.log(casa.getPeca().getUsuario());
+        if (casaDireita){
+            console.log(casaDireita.getUsuario());
+        }
+        if ((casaDireita) && (casaDireita.getUsuario() != casa.getPeca().getUsuario())){
+            console.log("Possibilidade de ataque da direita");
+            if (!casaDownEsquerda) {
+                console.log("Come da direita para esquerda");
+                casa.LimpaCasa();
+                ArrayCasas[casa.getPosicao().y +1][casa.getPosicao().x - 1].setPeca(casaDireita);
+                ArrayCasas[casa.getPosicao().y -1][casa.getPosicao().x + 1].LimpaCasa();
+                return true;
+            }
+        }
+        if (casaEsquerda) {
+            console.log(casaEsquerda.getUsuario());
+        }
+        if ((casaEsquerda) && (casaEsquerda.getUsuario() != casa.getPeca().getUsuario())){
+            if (!casaDownDireita){
+                casa.LimpaCasa();
+                ArrayCasas[casa.getPosicao().y +1][casa.getPosicao().x + 1].setPeca(casaEsquerda);
+                ArrayCasas[casa.getPosicao().y -1][casa.getPosicao().x - 1].LimpaCasa();
+                return true;
+            }
+        }
+        console.log("------");
+    }
 
     this.Movimenta = function (casa) {
         if (CasaSelecionada != null) {
@@ -360,8 +392,9 @@ function Tabuleiro(humano) {
                 // console.log("De:(" + CasaSelecionada.getPosicao().y + "-" + CasaSelecionada.getPosicao().x + ") Para:(" + casa.getPosicao().y + "-" + casa.getPosicao().x + ")");
                 casa.setPeca(CasaSelecionada.getPeca());
                 CasaSelecionada.LimpaCasa();
-                IniciaMakina();
-                console.log("Hora da IA executar um movimento.");
+                if (!movimentoAtaque(casa)) {
+                        IniciaMakina();
+                }
             } else {
                 //Anima(CasaSelecionada.getPeca().Usuario, "Como você é burro!! aprende a jogar damas!"); 
                 Anima(that.usuMakina, that.usuMakina.MsgErroValidacao());  // A maquina na vai cometer erros de validacao, logo podemos marretar o usuario aqui
