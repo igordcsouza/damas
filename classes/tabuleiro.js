@@ -369,6 +369,7 @@ function Tabuleiro(humano) {
                 casa.LimpaCasa();
                 ArrayCasas[casa.getPosicao().y +1][casa.getPosicao().x - 1].setPeca(casaDireita);
                 ArrayCasas[casa.getPosicao().y -1][casa.getPosicao().x + 1].LimpaCasa();
+                addPontosBranco();
                 return true;
             }
         }
@@ -380,6 +381,7 @@ function Tabuleiro(humano) {
                 casa.LimpaCasa();
                 ArrayCasas[casa.getPosicao().y +1][casa.getPosicao().x + 1].setPeca(casaEsquerda);
                 ArrayCasas[casa.getPosicao().y -1][casa.getPosicao().x - 1].LimpaCasa();
+                addPontosBranco();
                 return true;
             }
         }
@@ -420,6 +422,11 @@ function Tabuleiro(humano) {
 
     function addPontosPreto(){
         var td = document.getElementById("placar_coffee");
+        td.textContent = Number(td.textContent) + 1;
+    }
+
+    function addPontosBranco(){
+        var td = document.getElementById("placar_beer");
         td.textContent = Number(td.textContent) + 1;
     }
 
