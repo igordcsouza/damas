@@ -48,14 +48,16 @@ function Casa() {
     this.setTR = function (value) {
         TR = value;
     };
+	
+	this.deselected = function () {
+		this.setCor("cor");
+	}
 
     this.selected = function () {
         if (this.getCor() == "cor") {
-            // console.log(this.getCor() == "cor");
             this.setCor("selected");
         }
         else if (this.getCor() == "selected") {
-            console.log("2");
             this.setCor("cor");
         }
     }
@@ -67,7 +69,6 @@ function Casa() {
     this.setTD = function (value) {
         TD = value;
         TD.onclick = function () {            
-            instance.selected();
             tabuleiro.Movimenta(instance);
         };
     };
