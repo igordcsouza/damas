@@ -38,6 +38,7 @@
 body {
 }
 
+#MsgValidacao {border:0px; width:100%; text-align:center; font-size:20px; color:#666666;}
 
 h2 {display:inline-block; padding:20px;}
 
@@ -80,6 +81,8 @@ table.tabuleiro td {width:70px; height:70px; text-align:center;   max-width: 70p
 table.tabuleiro td {background-color:#F0D9B5;} 
 table.tabuleiro .cor {background-color:#B58863;}
 table.tabuleiro .selected {background-color: #FFFFFF;}
+table.tabuleiro .PecaAzul {background-color:#0000FF;}
+table.tabuleiro .PecaVermelho {background-color:#FF0000;}
 
 #divcentro 
 {
