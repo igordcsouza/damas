@@ -3,12 +3,14 @@
 function Tabuleiro(humano) {
 
     /* PRIVATE */
+	var comeu = false;
     var that = this;
     var ArrayCasas = new Array();
     var ElementoHtmlTabela = document.createElement("table");
     var ArrElementoHtmlTR = new Array();
     var CasaSelecionada = null;
 	var IA = new InteligenciaArtificial();
+	var CasaAoRedorComAdversarios = [];
     
     this.usuHumano = humano;
     this.usuMakina = null;
@@ -79,7 +81,6 @@ function Tabuleiro(humano) {
         }
     }
 
-
     /*  PRIVATE - Distribuindo as pecas */
     var InicializaParticipantes = function () {
 
@@ -101,7 +102,6 @@ function Tabuleiro(humano) {
         document.getElementById(that.usuMakina.tdAnimacao).appendChild(that.usuMakina.ImagemFace());
 
     }
-
     
     /* CONSTRUTOR */
     var __construct = function () {
@@ -111,100 +111,111 @@ function Tabuleiro(humano) {
         InicializaParticipantes();
         DistribuiPecas();
 		IA.retornaPecaJogavelIa(ArrayCasas, that.usuHumano.nome);
+		
+		//Comendo 3 seguidos obrigatoriamente
+		/*
+		ArrayCasas[7][5].setPeca(new Peca(that.usuHumano));
+		ArrayCasas[6][4].setPeca(new Peca(that.usuMakina));
+		ArrayCasas[4][4].setPeca(new Peca(that.usuMakina));
+		ArrayCasas[2][4].setPeca(new Peca(that.usuMakina));
+		*/
+		
+		//Comendo 2 seguidos obrigatoriamente
+		/*
+		ArrayCasas[7][5].setPeca(new Peca(that.usuHumano));
+		ArrayCasas[6][4].setPeca(new Peca(that.usuMakina));
+		ArrayCasas[4][4].setPeca(new Peca(that.usuMakina));
+		*/
+		
+		//Comendo 2 seguidos obrigatoriamente
+		/*
+		ArrayCasas[7][5].setPeca(new Peca(that.usuHumano));
+		ArrayCasas[6][4].setPeca(new Peca(that.usuMakina));
+		ArrayCasas[4][2].setPeca(new Peca(that.usuMakina));
+		ArrayCasas[4][4].setPeca(new Peca(that.usuMakina));
+		*/
+		
+		
+		
     } () 
-	
-
-	
-
 
 
     function validaCaptura(param) {
-        if (CasaSelecionada.getPeca().Usuario != ArrayCasas[CasaSelecionada.getPosicao().y - 1][CasaSelecionada.getPosicao().x + param].getPeca().Usuario) {
-            //ArrayCasas[CasaSelecionada.getPosicao().y - 1][CasaSelecionada.getPosicao().x + param].LimpaCasa();
+        if (CasaSelecionada.getPeca().Usuario != ArrayCasas[CasaSelecionada.getPosicao().y - 
+
+1][CasaSelecionada.getPosicao().x + param].getPeca().Usuario) {
+            ArrayCasas[CasaSelecionada.getPosicao().y - 1][CasaSelecionada.getPosicao().x + param].LimpaCasa();
+			comeu = true;
 		    addPontosPreto();
-            return true;
+		    return true;
         }
         return false;
     }
 	
-	function validaCapturaMultipla(c){
-		
+	function RetornaPecaParaMultiplo(casa, p1, p2){
+		try {
+			return ArrayCasas[casa.getPosicao().y + p1][casa.getPosicao().x + p2];
+	    }catch(err) {
+			console.log(err.message);
+			return null;
+		}
+	}
 	
-		
-		var CasaAoRedorComAdversarios = [];
-		
-		var c_top_dir = ArrayCasas[c.getPosicao().y - 1][c.getPosicao().x + 1];
-		var c_top_esq = ArrayCasas[c.getPosicao().y - 1][c.getPosicao().x - 1];
-		var c_bot_dir = ArrayCasas[c.getPosicao().y + 1][c.getPosicao().x + 1];
-		var c_bot_esq = ArrayCasas[c.getPosicao().y + 1][c.getPosicao().x - 1];
-		
-		// SE A CASA EXISTIR E NÂO TIVER VAZIA E FOR A MAQUINA
-		if (c_top_dir != null){
-			c_bot_esq.selected();
-			if(c_top_dir.getPeca() != null){
-				if(c_top_dir.getPeca().Usario == that.usuMakina){
-				   var destino = ArrayCasas[c_top_dir.getPosicao().y - 1][c_top_dir.getPosicao().x + 1];
-		 		    if(destino != null && destino.getPeca() == null){  //SE A CASA EXISTIR E TIVER VAZIA
-					  CasaAoRedorComAdversarios.push(destino);
+	function RetornaCasaDestinoParaMultiplo(casa, p1, p2){
+		if (casa != null){
+			try {
+ 			   if(casa.getPeca() != null){
+					if(casa.getPeca().Usuario.nome == that.usuMakina.nome){
+					   var dest = ArrayCasas[casa.getPosicao().y + p1][casa.getPosicao().x + p2];
+						if(dest != null) {
+							if(dest.getPeca() == null){  //SE A CASA EXISTIR E TIVER VAZIA
+							   return dest;
+							}
+						}
 					}
 				}
 			}
-		}
-		
-		if (c_top_esq != null){
-			c_top_esq.selected();
-			if(c_top_esq.getPeca() != null){
-				if(c_top_esq.getPeca().Usario == that.usuMakina){
-				   var destino = ArrayCasas[c_top_esq.getPosicao().y - 1][c_top_esq.getPosicao().x + 1];
-		 		    if(destino != null && destino.getPeca() == null){  //SE A CASA EXISTIR E TIVER VAZIA
-					  CasaAoRedorComAdversarios.push(destino);
-					}
-				}
+			catch(err) {
+				console.log(err.message);
+				return null;
 			}
 		}
+		return null;
+	}
+	
+	
+	var validaCapturaMultipla = function(casadestino){
+		var destino = null;
+		CasaAoRedorComAdversarios = []; //Limpando array
+		var c_top_dir = RetornaPecaParaMultiplo(casadestino, -1, 1);
+		var c_top_esq = RetornaPecaParaMultiplo(casadestino, -1, -1);
+		var c_bot_dir = RetornaPecaParaMultiplo(casadestino, 1, 1);
+		var c_bot_esq = RetornaPecaParaMultiplo(casadestino, 1, -1);
 		
-		
-		// SE A CASA EXISTIR E NÂO TIVER VAZIA E FOR A MAQUINA
-		if (c_bot_dir != null){
-			c_bot_dir.selected();
-			if(c_bot_dir.getPeca() != null){
-				if(c_bot_dir.getPeca().Usario == that.usuMakina){
-				   var destino = ArrayCasas[c_bot_dir.getPosicao().y - 1][c_bot_dir.getPosicao().x + 1];
-		 		    if(destino != null && destino.getPeca() == null){  //SE A CASA EXISTIR E TIVER VAZIA
-					  CasaAoRedorComAdversarios.push(destino);
-					}
-				}
-			}
-		}
-		
-		
-		// SE A CASA EXISTIR E NÂO TIVER VAZIA E FOR A MAQUINA
-		if (c_bot_esq != null){
-			c_bot_esq.selected();
-			if(c_bot_esq.getPeca() != null){
-				if(c_bot_esq.getPeca().Usario == that.usuMakina){
-				   var destino = ArrayCasas[c_bot_esq.getPosicao().y - 1][c_bot_esq.getPosicao().x + 1];
-		 		    if(destino != null && destino.getPeca() == null){  //SE A CASA EXISTIR E TIVER VAZIA
-					  CasaAoRedorComAdversarios.push(destino);
-					}
-				}
-			}
-		}
+		destino = RetornaCasaDestinoParaMultiplo(c_top_dir, -1, 1);
+		if(destino != null){ CasaAoRedorComAdversarios.push(new Array(casadestino, destino)); }
+		destino = RetornaCasaDestinoParaMultiplo(c_top_esq, -1, -1);
+		if(destino != null){ CasaAoRedorComAdversarios.push(new Array(casadestino, destino)); }
+		destino = RetornaCasaDestinoParaMultiplo(c_bot_dir, 1, 1);
+		if(destino != null){ CasaAoRedorComAdversarios.push(new Array(casadestino, destino)); }
+		destino = RetornaCasaDestinoParaMultiplo(c_bot_esq, 1, -1);
+		if(destino != null){ CasaAoRedorComAdversarios.push(new Array(casadestino, destino)); }
 		
 		
 		if(CasaAoRedorComAdversarios.length == 0){
+			CasaAoRedorComAdversarios = null;
 		    return ; //FIM	
 		}
 		
 		if(CasaAoRedorComAdversarios.length == 1){ //Só tem uma opção para fazer a joga multipla
-		    alert("achou");
-		    return ; //FIM	
+  		    CasaSelecionada = CasaAoRedorComAdversarios[0][0];
+			CasaSelecionada.selected();
+			that.Movimenta(CasaAoRedorComAdversarios[0][1]);
 		}
 		
-
-		
-		
-		
+		if(CasaAoRedorComAdversarios.length > 1){
+		    return ; //FIM	
+		}
 	}
 	
 	
@@ -225,13 +236,15 @@ function Tabuleiro(humano) {
 
     /* implementar a regra de movimento*/
     var validaMovimento = function (c) {
-
+        		
         if (c.getPeca() != null) {   //Verificando se a casa de destino está sem peça
 			ExibeMsgValidacao("A casa de destino precisa estar vazia!");
  			return false;
         }
 		
-        if (c.getPosicao().x == CasaSelecionada.getPosicao().x || c.getPosicao().y == CasaSelecionada.getPosicao().y) {   //Verificando movimentacao lateral
+        if (c.getPosicao().x == CasaSelecionada.getPosicao().x || c.getPosicao().y == CasaSelecionada.getPosicao().y) {   
+
+//Verificando movimentacao lateral
 		    ExibeMsgValidacao("Voce so pode andar na diagonal!");
             return false;
         }
@@ -272,7 +285,9 @@ function Tabuleiro(humano) {
         }
 		
 
-        if (((c.getPosicao().y >= CasaSelecionada.getPosicao().y + 2) || (c.getPosicao().y <= CasaSelecionada.getPosicao().y - 2)) && (!CasaSelecionada.getPeca().getDama())){
+        if (((c.getPosicao().y >= CasaSelecionada.getPosicao().y + 2) || (c.getPosicao().y <= 
+
+CasaSelecionada.getPosicao().y - 2)) && (!CasaSelecionada.getPeca().getDama())){
             console.log("O player pulou uma coluna. Verificar se foi caso de comer uma peca ou uma jogada irregular. 2");
             ExibeMsgValidacao("Jogada irregular!");
             return false;
@@ -303,26 +318,97 @@ function Tabuleiro(humano) {
 
 
 
+	function ValidaCapturaMultiplaMaisDeUm(casa){
+		for (var i = 0; i < CasaAoRedorComAdversarios.length; i++) {
+			if(CasaAoRedorComAdversarios[i][1].getPosicao().y == casa.getPosicao().y && CasaAoRedorComAdversarios[i][1].getPosicao().x == casa.getPosicao().x){
+				return true;
+			}
+		}
+		return false;
+	}
+
 
     this.Movimenta = function (casa) {
+		
+		//Verificando se é obrigdo a comer alguma peca
+		if(CasaAoRedorComAdversarios != null && CasaAoRedorComAdversarios.length > 1){
+			CasaAoRedorComAdversarios[0][0].setSelected();
+			if(!ValidaCapturaMultiplaMaisDeUm(casa)){
+			   CasaSelecionada = CasaAoRedorComAdversarios[0][0];
+			   ExibeMsgValidacao("Voce esta obrigado a comer uma peca!");
+			   return;
+			}
+		}
+		
 		if (CasaSelecionada != null) {
             if (validaMovimento(casa)) {
                 casa.setPeca(CasaSelecionada.getPeca());
-							validaCapturaMultipla(casa);
-				CasaSelecionada.LimpaCasa();
+				CasaSelecionada.selected();
+				CasaSelecionada.LimpaCasa();  //Removendo da casa de origm do movimento
+				if(comeu){
+					ContadorJogadasSemCapturaZerar();
+					validaCapturaMultipla(casa);   //Precisa ser aqui pq eu tenho que passar a casa
+				}else{
+					ContadorJogadasSemCaptura();
+				}
                 IA.retornaPecaJogavelIa(ArrayCasas, that.usuHumano.nome);
-            }
-			CasaSelecionada.selected();
+            }else{
+				CasaSelecionada.selected();
+			}
+		
             CasaSelecionada = null;
+			comeu = false;  
         } else {
             if (ValidaCasaSelecionada(casa)) {
 			   CasaSelecionada = casa;
 			   CasaSelecionada.selected();
         	}
         }
-    }
+		VerificaVitoria();
+    };
 	
-
+	function ContadorJogadasSemCapturaZerar(){
+		var td = document.getElementById("jogadasSemCapturaGeral");
+        td.textContent = 0;
+	}
+	
+	function ContadorJogadasSemCaptura(){
+		var td = document.getElementById("jogadasSemCapturaGeral");
+		var count = Number(td.textContent) + 1;
+        td.textContent = count;
+		if(count == 20){
+			 alert("EMPATOU");
+		}
+	}
+	
+	function VerificaVitoria(){
+		var qtdHumano = 0;
+		var qtdMaquina = 0;
+		
+		for (var i = 0; i < 8; i++) {
+            for (var j = 0; j < 8; j++) {
+                 var peca = ArrayCasas[i][j].getPeca();
+				 if(peca != null){
+					 if(peca.Usuario.nome == that.usuMakina.nome){
+						 qtdMaquina++;
+					 }else{
+					    qtdHumano++;
+					 } 
+				 }
+         
+            }
+        }
+		
+		if(qtdHumano == 0){
+			alert("MAQUINA GANHOU"); 
+		}
+		
+		if(qtdMaquina == 0){
+			alert("HUMANO GANHOU"); 
+		}
+	}
+	
+	
 
     function addPontosPreto(){
         var td = document.getElementById("placar_coffee");
@@ -340,6 +426,3 @@ function Tabuleiro(humano) {
     }
 
 }
-
-
-

@@ -3,7 +3,7 @@ function Display() {
     var selecionado = null;
     var bill = new Bill();
     var jobs = new Jobs();
-    var jogadasSemCaptura = 20;
+    var jogadasSemCaptura = 0;
 
     this.getUsuarioSelecionado = function () {
         return selecionado;
@@ -123,6 +123,7 @@ function Display() {
 
         var cont = document.createElement("div");
         cont.setAttribute("class", "numero");
+		cont.setAttribute("id", "jogadasSemCapturaGeral");
         cont.innerHTML = jogadasSemCaptura;
 
         colContadorJogadas.appendChild(txt_contador);

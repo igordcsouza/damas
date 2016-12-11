@@ -49,8 +49,12 @@ function Casa() {
         TR = value;
     };
 	
-	this.deselected = function () {
-		this.setCor("cor");
+	this.selectedAzul = function () {
+		this.setCor("PecaAzul");
+	}
+	
+	this.selectedVermelho = function () {
+		this.setCor("PecaVermelho");
 	}
 
     this.selected = function () {
@@ -61,6 +65,10 @@ function Casa() {
             this.setCor("cor");
         }
     }
+	
+	this.setSelected = function (){
+		this.setCor("selected");
+	}
 
     this.getTR = function () {
         return TR;
