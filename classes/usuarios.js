@@ -64,7 +64,7 @@ function Jobs() {
     this.nome           = "jobs";
     this.imgPeca        = "img/branca.png";
     this.imgPecaDama    = "img/brancaDama.png";
-    this.imgFaceAnima   = "img/jobsAnima.gif";
+    this.imgFaceAnima   = "img/Barney.jpg";
     this.imgFace        = "img/branca.png";
 }
 
@@ -72,7 +72,7 @@ function Bill() {
     this.nome           = "bill";
     this.imgPeca        = "img/preta.png";
     this.imgPecaDama    = "img/pretaDama.png";
-    this.imgFaceAnima   = "img/billAnima.gif";
+    this.imgFaceAnima   = "img/joey.jpg";
     this.imgFace        = "img/preta.png";
 }
 

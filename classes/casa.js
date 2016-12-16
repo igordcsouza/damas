@@ -37,7 +37,15 @@ function Casa() {
 
     this.setPeca = function (value) {
         peca = value;
-        TD.appendChild(peca.get());
+        if(peca.getDama()){
+            //console.log(posicao.x);
+            //console.log(posicao.y);
+            var item = $(peca.get()).hide().fadeIn();
+            $(TD).append(item);
+        }
+        else{
+            TD.appendChild(peca.get());
+        }
     };
 
 

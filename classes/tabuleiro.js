@@ -391,7 +391,7 @@ function Tabuleiro(humano) {
     this.Movimenta = function (casa) {
         if (CasaSelecionada != null) {
             if (validaMovimento(casa)) {
-                // console.log("De:(" + CasaSelecionada.getPosicao().y + "-" + CasaSelecionada.getPosicao().x + ") Para:(" + casa.getPosicao().y + "-" + casa.getPosicao().x + ")");
+                console.log("De:(" + CasaSelecionada.getPosicao().y + "-" + CasaSelecionada.getPosicao().x + ") Para:(" + casa.getPosicao().y + "-" + casa.getPosicao().x + ")");
                 casa.setPeca(CasaSelecionada.getPeca());
                 CasaSelecionada.LimpaCasa();
                 if (!movimentoAtaque(casa)) {
