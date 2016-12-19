@@ -110,11 +110,11 @@ function Tabuleiro(humano) {
     /* CONSTRUTOR */
     var __construct = function () {
         CriaArrayCasas();
-       // MontaTabuleiroHtml();
-       // ColoreTabuleiro();
-       // InicializaParticipantes();
-       // DistribuiPecas();
-	   // IA.retornaPecaJogavelIa(ArrayCasas, that.usuHumano.nome);
+        MontaTabuleiroHtml();
+        ColoreTabuleiro();
+        InicializaParticipantes();
+        DistribuiPecas();
+	    IA.retornaPecaJogavelIa(ArrayCasas, that.usuHumano.nome);
 		
 		//Comendo 3 seguidos obrigatoriamente
 		/*
