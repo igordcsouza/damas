@@ -2,20 +2,23 @@
 
 function Tabuleiro(humano) {
 
-
-    var IApossoJogar = false;
     /* PRIVATE */
+	var comeu = false;
     var that = this;
     var ArrayCasas = new Array();
     var ElementoHtmlTabela = document.createElement("table");
     var ArrElementoHtmlTR = new Array();
     var CasaSelecionada = null;
-    var hud = new HUD();
-
+	var IA = new InteligenciaArtificial();
+	var CasaAoRedorComAdversarios = [];
+    
     this.usuHumano = humano;
     this.usuMakina = null;
 
-
+    /* função para teste unitários */
+    this.RetornaArrayCasas = function () {
+        return ArrayCasas;
+    }
     
     /* PRIVATE - Criando o Array de Casas */
     var CriaArrayCasas = function () {
@@ -31,7 +34,6 @@ function Tabuleiro(humano) {
     
     /* PRIVATE - Montando a Tabela em HTML */
     var MontaTabuleiroHtml = function () {
-
         ElementoHtmlTabela.setAttribute("class", "tabuleiro");
 
         for (var i = 0; i < 8; i++) {
@@ -43,8 +45,11 @@ function Tabuleiro(humano) {
             }
             ElementoHtmlTabela.appendChild(ArrElementoHtmlTR[i]);
         }
+		
+		var centro = document.createElement("center");  // centralizando a tabuleiro
+		centro.appendChild(ElementoHtmlTabela);
 
-        document.getElementById("TDtabuleiro").appendChild(ElementoHtmlTabela);
+        document.getElementById("TDtabuleiro").appendChild(centro);
     };
     
     /* PRIVATE - Adiciando as Classe as TD para colorir */
@@ -54,7 +59,6 @@ function Tabuleiro(humano) {
                 if ((i % 2) == 0) {
                     if ((j % 2) == 0) {
                         ArrayCasas[i][j].setCor("cor");
-
                     }
                 }else {
                     if (!(j % 2) == 0) {
@@ -81,7 +85,6 @@ function Tabuleiro(humano) {
         }
     }
 
-
     /*  PRIVATE - Distribuindo as pecas */
     var InicializaParticipantes = function () {
 
@@ -103,190 +106,151 @@ function Tabuleiro(humano) {
         document.getElementById(that.usuMakina.tdAnimacao).appendChild(that.usuMakina.ImagemFace());
 
     }
-
-
-    var IniciaMakina = function () {
-        var count = 1;
-        console.log(that.usuHumano.nome);
-        retornaPecaJogavelIa();
-        console.log("IA JOGANDO");
-    }
-
-
-    function retornaPecaJogavelIa() {
-        var fugasObrigatorias = [];
-        var jogadasPossiveis = [];
-        var ataqueNecessario = [];
-        var peca;
-        for (var i = ArrayCasas.length - 1; i >= 0; i--) {
-            for (var j = ArrayCasas[i].length - 1; j >= 0; j--) {
-                if ((ArrayCasas[i][j].getPeca() != null) && (ArrayCasas[i][j].getPeca().Usuario["nome"] != that.usuHumano.nome)) {
-                    if (testaMovimentacaoIA(i,j) == 1){
-                        jogadasPossiveis.push([i,j]);
-                    }
-                    if (testaMovimentacaoIA(i,j) == 2) {
-                        ataqueNecessario.push([i,j]);
-                    }
-                }
-            }
-        }
-        if (fugasObrigatorias.length > 0) {
-            peca = fugasObrigatorias[Math.floor(Math.random() * fugasObrigatorias.length)];
-        }
-        else if (ataqueNecessario.length > 0){
-            peca = ataqueNecessario[Math.floor(Math.random() * ataqueNecessario.length)];
-        }
-        else if (jogadasPossiveis.length > 0){
-            peca = jogadasPossiveis[Math.floor(Math.random() * jogadasPossiveis.length)];
-        }
-        MovimentaPeca(peca[0],peca[1]);
-    }
-
-    function testaMovimentacaoIA(linha,coluna){
-        if ((validaPosicaoIA(linha+1, coluna+1)) || (validaPosicaoIA(linha+1, coluna-1))){
-            return 1;
-        }
-        if (validaMovimentoCapturaSimples(linha,coluna)) {
-            return 2;
-        }
-        if (validaMovimentoDefesa(linha,coluna)){
-            return 3;
-        }
-    }
-
-    function validaPosicaoIA(linha,coluna){
-        if ((ArrayCasas[linha][coluna]) && (ArrayCasas[linha][coluna].getPeca() == null)){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    function validaMovimentoDefesa(linha,coluna){
-        return false;
-    }
-    function validaMovimentoCapturaSimples(linha,coluna){
-        return false;   
-    //     console.log(ArrayCasas[linha+2][coluna+2] == null);
-    //     if (ArrayCasas[linha+2][coluna+2] == null){
-    //         if (ArrayCasas[linha+1][coluna+1] != null) {
-    //             console.log("movimentoCaptura");
-    //             console.log(linha + " " + coluna + " --- ");
-    //             console.log(ArrayCasas[linha+1][coluna+1].getPeca().Usuario);
-    //             console.log(that.usuHumano);
-    //             console.log("fimMovimentoCaptura");
-    //         }
-    //     }
-    }
-
-
-    function MovimentaPeca(linha,coluna){
-        var direita = validaPosicaoIA(linha+1, coluna + 1);
-        var esquerda = validaPosicaoIA(linha+1, coluna - 1);
-        var casa = ArrayCasas[linha][coluna];
-
-        if ((direita == true) && (esquerda == true)){
-            if (Math.random() >= 0.5) {
-                ArrayCasas[linha+1][coluna+1].setPeca(casa.getPeca());
-            }
-            else {
-                ArrayCasas[linha+1][coluna-1].setPeca(casa.getPeca());
-            }
-        }
-        else if (direita == true) {
-            ArrayCasas[linha+1][coluna+1].setPeca(casa.getPeca());
-        }
-        else {
-            ArrayCasas[linha+1][coluna-1].setPeca(casa.getPeca());
-        }
-        casa.LimpaCasa();
-        return true;
-    }
-
-
     
     /* CONSTRUTOR */
     var __construct = function () {
-
-
         CriaArrayCasas();
-        MontaTabuleiroHtml();
-        ColoreTabuleiro();
-        InicializaParticipantes();
-        DistribuiPecas();
+       // MontaTabuleiroHtml();
+       // ColoreTabuleiro();
+       // InicializaParticipantes();
+       // DistribuiPecas();
+	   // IA.retornaPecaJogavelIa(ArrayCasas, that.usuHumano.nome);
+		
+		//Comendo 3 seguidos obrigatoriamente
+		/*
+		ArrayCasas[7][5].setPeca(new Peca(that.usuHumano));
+		ArrayCasas[6][4].setPeca(new Peca(that.usuMakina));
+		ArrayCasas[4][4].setPeca(new Peca(that.usuMakina));
+		ArrayCasas[2][4].setPeca(new Peca(that.usuMakina));
+		*/
+		
+		//Comendo 2 seguidos obrigatoriamente
+		/*
+		ArrayCasas[7][5].setPeca(new Peca(that.usuHumano));
+		ArrayCasas[6][4].setPeca(new Peca(that.usuMakina));
+		ArrayCasas[4][4].setPeca(new Peca(that.usuMakina));
+		*/
+		
+		//Comendo 2 seguidos obrigatoriamente
+		/*
+		ArrayCasas[7][5].setPeca(new Peca(that.usuHumano));
+		ArrayCasas[6][4].setPeca(new Peca(that.usuMakina));
+		ArrayCasas[4][2].setPeca(new Peca(that.usuMakina));
+		ArrayCasas[4][4].setPeca(new Peca(that.usuMakina));
+		*/
+		
+		
+		
+    } () 
 
-        IniciaMakina();
 
-
-
-    } ()    
-
-    var movimentoIrregular = function(c){
-        alert("O movimento que voce esta tentando fazer é considerado irregular.");
-        c.selected();
-        CasaSelecionada.selected();
-    }
-
-
-    function validaCapturaEsquerda(c) {
-        var coluna = CasaSelecionada.getPosicao().x - 1; 
-        var linha = CasaSelecionada.getPosicao().y - 1;
-        var c_aux = ArrayCasas[linha][coluna];
-
-        console.log(linha);
-        console.log(coluna);
-        console.log(c_aux.getPeca().Usuario);
-        console.log(CasaSelecionada.getPeca().Usuario);
-        if (CasaSelecionada.getPeca().Usuario != c_aux.getPeca().Usuario) {
-            // ArrayCasas[linha][coluna].LimpaCasa();
-            c_aux.LimpaCasa();
-            console.log("deveria limpar");
-            c.selected();
-            CasaSelecionada.selected();
-            addPontosPreto();
-            return true;
+    function validaCaptura(param) {
+        if (CasaSelecionada.getPeca().Usuario != ArrayCasas[CasaSelecionada.getPosicao().y - 1][CasaSelecionada.getPosicao().x + param].getPeca().Usuario) {
+            ArrayCasas[CasaSelecionada.getPosicao().y - 1][CasaSelecionada.getPosicao().x + param].LimpaCasa();
+			comeu = true;
+		    addPontosPreto();
+		    return true;
         }
-        c_aux = null;
-        linha = null;
-        coluna = null;
         return false;
     }
+	
+	function RetornaPecaParaMultiplo(casa, p1, p2){
+		try {
+			return ArrayCasas[casa.getPosicao().y + p1][casa.getPosicao().x + p2];
+	    }catch(err) {
+			console.log(err.message);
+			return null;
+		}
+	}
+	
+	function RetornaCasaDestinoParaMultiplo(casa, p1, p2){
+		if (casa != null){
+			try {
+ 			   if(casa.getPeca() != null){
+					if(casa.getPeca().Usuario.nome == that.usuMakina.nome){
+					   var dest = ArrayCasas[casa.getPosicao().y + p1][casa.getPosicao().x + p2];
+						if(dest != null) {
+							if(dest.getPeca() == null){  //SE A CASA EXISTIR E TIVER VAZIA
+							   return dest;
+							}
+						}
+					}
+				}
+			}
+			catch(err) {
+				console.log(err.message);
+				return null;
+			}
+		}
+		return null;
+	}
+	
+	
+	var validaCapturaMultipla = function(casadestino){
+		var destino = null;
+		CasaAoRedorComAdversarios = []; //Limpando array
+		var c_top_dir = RetornaPecaParaMultiplo(casadestino, -1, 1);
+		var c_top_esq = RetornaPecaParaMultiplo(casadestino, -1, -1);
+		var c_bot_dir = RetornaPecaParaMultiplo(casadestino, 1, 1);
+		var c_bot_esq = RetornaPecaParaMultiplo(casadestino, 1, -1);
+		
+		destino = RetornaCasaDestinoParaMultiplo(c_top_dir, -1, 1);
+		if(destino != null){ CasaAoRedorComAdversarios.push(new Array(casadestino, destino)); }
+		destino = RetornaCasaDestinoParaMultiplo(c_top_esq, -1, -1);
+		if(destino != null){ CasaAoRedorComAdversarios.push(new Array(casadestino, destino)); }
+		destino = RetornaCasaDestinoParaMultiplo(c_bot_dir, 1, 1);
+		if(destino != null){ CasaAoRedorComAdversarios.push(new Array(casadestino, destino)); }
+		destino = RetornaCasaDestinoParaMultiplo(c_bot_esq, 1, -1);
+		if(destino != null){ CasaAoRedorComAdversarios.push(new Array(casadestino, destino)); }
+		
+		
+		if(CasaAoRedorComAdversarios.length == 0){
+			CasaAoRedorComAdversarios = null;
+		    return ; //FIM	
+		}
+		
+		if(CasaAoRedorComAdversarios.length == 1){ //Só tem uma opção para fazer a joga multipla
+  		    CasaSelecionada = CasaAoRedorComAdversarios[0][0];
+			CasaSelecionada.selected();
+			that.Movimenta(CasaAoRedorComAdversarios[0][1]);
+		}
+		
+		if(CasaAoRedorComAdversarios.length > 1){
+		    return ; //FIM	
+		}
+	}
+	
+	
+	var ValidaCasaSelecionada = function(casa){
+		
+ 		   if (casa.getPeca() == null) {
+                ExibeMsgValidacao("Voce precisa clicar em uma casa que tenha uma peca!");
+                return false;
+            }
 
-    function validaCapturaDireita(c){
-        var coluna = CasaSelecionada.getPosicao().x + 1; 
-        var linha = CasaSelecionada.getPosicao().y - 1;
-        var c_aux = ArrayCasas[linha][coluna];
-
-        console.log(linha);
-        console.log(coluna);
-        console.log(c_aux.getPeca().Usuario);
-        console.log(CasaSelecionada.getPeca().Usuario);
-        if (CasaSelecionada.getPeca().Usuario != c_aux.getPeca().Usuario) {
-            // ArrayCasas[linha][coluna].LimpaCasa();
-            c_aux.LimpaCasa();
-            console.log("deveria limpar");
-            c.selected();
-            CasaSelecionada.selected();
-            addPontosPreto();
-            return true;
-        }
-        c_aux = null;
-        linha = null;
-        coluna = null;
-        return false;
+            if (casa.getPeca().Usuario.tdFala != that.usuHumano.tdFala) {
+                ExibeMsgValidacao("Voce precisa clicar em uma casa que tenha uma peca sua!");
+                return false;
+            }
+			
+			return true;
     }
 
     /* implementar a regra de movimento*/
     var validaMovimento = function (c) {
+        		
         if (c.getPeca() != null) {   //Verificando se a casa de destino está sem peça
-            movimentoIrregular(c);
+			ExibeMsgValidacao("A casa de destino precisa estar vazia!");
+ 			return false;
+        }
+		
+        if (c.getPosicao().x == CasaSelecionada.getPosicao().x || c.getPosicao().y == CasaSelecionada.getPosicao().y) {   
+
+//Verificando movimentacao lateral
+		    ExibeMsgValidacao("Voce so pode andar na diagonal!");
             return false;
         }
-        if (c.getPosicao().x == CasaSelecionada.getPosicao().x || c.getPosicao().y == CasaSelecionada.getPosicao().y) {   //Verificando movimentacao lateral
-            movimentoIrregular(c);
-            return false;
-        }
+		
         if (CasaSelecionada.getPeca().getDama()) {
             var z = c.getPosicao().x - CasaSelecionada.getPosicao().x;
             var cx = c.getPosicao().x;
@@ -300,39 +264,40 @@ function Tabuleiro(humano) {
                 console.log("Movimento Valido");
             }
             else {
-                movimentoIrregular(c);
+                ExibeMsgValidacao("Movimento da Dama irregular!");
                 return false;
             }
-
         }
 
         if ((c.getPosicao().x >= CasaSelecionada.getPosicao().x + 2) && (!CasaSelecionada.getPeca().getDama())){
             if (c.getPosicao().x == CasaSelecionada.getPosicao().x + 2) {
-                return validaCapturaDireita(c);
+                return validaCaptura(1);  //DIREITA
             }
             console.log("O player pulou uma linha. Verificar se foi o caso de comer um peca ou uma jogada irregular. 1");
-            movimentoIrregular(c);
+            ExibeMsgValidacao("Jogada irregular!");
             return false;            
         }
 
         if ((c.getPosicao().x <= CasaSelecionada.getPosicao().x - 2) && (!CasaSelecionada.getPeca().getDama())){
             if (c.getPosicao().x == CasaSelecionada.getPosicao().x - 2) {
-                return validaCapturaEsquerda(c);
+                return validaCaptura(-1); //ESQUERDA
             }
-            movimentoIrregular(c);
+            ExibeMsgValidacao("Jogada irregular!");
             return false;
         }
+		
 
-        if (((c.getPosicao().y >= CasaSelecionada.getPosicao().y +2) || (c.getPosicao().y <= CasaSelecionada.getPosicao().y -2)) && (!CasaSelecionada.getPeca().getDama())){
+        if (((c.getPosicao().y >= CasaSelecionada.getPosicao().y + 2) || (c.getPosicao().y <= CasaSelecionada.getPosicao().y - 2)) && (!CasaSelecionada.getPeca().getDama())){
             console.log("O player pulou uma coluna. Verificar se foi caso de comer uma peca ou uma jogada irregular. 2");
-            movimentoIrregular(c);
+            ExibeMsgValidacao("Jogada irregular!");
             return false;
         }
 
         // Remover para a validação da dama ser realmente valida
         // Esse código coloca qualquer pedra que encoste na parede esquerda como dama. 
         // Apenas para fins de testes.
-        if (c.getPosicao().x == 0) {
+        /*
+		if (c.getPosicao().x == 0) {
             CasaSelecionada.getPeca().setDama(true);
         }
 
@@ -345,109 +310,121 @@ function Tabuleiro(humano) {
             movimentoIrregular(c);
             return false;
         }
+		*/
 
-        CasaSelecionada.selected()
-        c.selected();
+        
         return true;
     }
 
 
-    var movimentoAtaque = function (casa) {
-        console.log("------");
-        var casaDireita = ArrayCasas[casa.getPosicao().y -1][casa.getPosicao().x + 1].getPeca();
-        var casaEsquerda = ArrayCasas[casa.getPosicao().y -1][casa.getPosicao().x - 1].getPeca();
-        var casaDownEsquerda = ArrayCasas[casa.getPosicao().y +1][casa.getPosicao().x - 1].getPeca();
-        var casaDownDireita = ArrayCasas[casa.getPosicao().y +1][casa.getPosicao().x + 1].getPeca();
-        console.log(casa.getPeca().getUsuario());
-        if (casaDireita){
-            console.log(casaDireita.getUsuario());
-        }
-        if ((casaDireita) && (casaDireita.getUsuario() != casa.getPeca().getUsuario())){
-            console.log("Possibilidade de ataque da direita");
-            if (!casaDownEsquerda) {
-                console.log("Come da direita para esquerda");
-                casa.LimpaCasa();
-                ArrayCasas[casa.getPosicao().y +1][casa.getPosicao().x - 1].setPeca(casaDireita);
-                ArrayCasas[casa.getPosicao().y -1][casa.getPosicao().x + 1].LimpaCasa();
-                addPontosBranco();
-                return true;
-            }
-        }
-        if (casaEsquerda) {
-            console.log(casaEsquerda.getUsuario());
-        }
-        if ((casaEsquerda) && (casaEsquerda.getUsuario() != casa.getPeca().getUsuario())){
-            if (!casaDownDireita){
-                casa.LimpaCasa();
-                ArrayCasas[casa.getPosicao().y +1][casa.getPosicao().x + 1].setPeca(casaEsquerda);
-                ArrayCasas[casa.getPosicao().y -1][casa.getPosicao().x - 1].LimpaCasa();
-                addPontosBranco();
-                return true;
-            }
-        }
-        console.log("------");
-    }
+
+	function ValidaCapturaMultiplaMaisDeUm(casa){
+		for (var i = 0; i < CasaAoRedorComAdversarios.length; i++) {
+			if(CasaAoRedorComAdversarios[i][1].getPosicao().y == casa.getPosicao().y && CasaAoRedorComAdversarios[i][1].getPosicao().x == casa.getPosicao().x){
+				return true;
+			}
+		}
+		return false;
+	}
+
 
     this.Movimenta = function (casa) {
-        if (CasaSelecionada != null) {
+		
+		//Verificando se é obrigdo a comer alguma peca
+		if(CasaAoRedorComAdversarios != null && CasaAoRedorComAdversarios.length > 1){
+			CasaAoRedorComAdversarios[0][0].setSelected();
+			if(!ValidaCapturaMultiplaMaisDeUm(casa)){
+			   CasaSelecionada = CasaAoRedorComAdversarios[0][0];
+			   ExibeMsgValidacao("Voce esta obrigado a comer uma peca!");
+			   return;
+			}
+		}
+		
+		if (CasaSelecionada != null) {
             if (validaMovimento(casa)) {
-                console.log("De:(" + CasaSelecionada.getPosicao().y + "-" + CasaSelecionada.getPosicao().x + ") Para:(" + casa.getPosicao().y + "-" + casa.getPosicao().x + ")");
                 casa.setPeca(CasaSelecionada.getPeca());
-                CasaSelecionada.LimpaCasa();
-                if (!movimentoAtaque(casa)) {
-                        IniciaMakina();
-                }
-            } else {
-                //Anima(CasaSelecionada.getPeca().Usuario, "Como você é burro!! aprende a jogar damas!"); 
-                Anima(that.usuMakina, that.usuMakina.MsgErroValidacao());  // A maquina na vai cometer erros de validacao, logo podemos marretar o usuario aqui
-            }
+				CasaSelecionada.selected();
+				CasaSelecionada.LimpaCasa();  //Removendo da casa de origm do movimento
+				if(comeu){
+					ContadorJogadasSemCapturaZerar();
+					validaCapturaMultipla(casa);   //Precisa ser aqui pq eu tenho que passar a casa
+				}else{
+					ContadorJogadasSemCaptura();
+				}
+	            if (!IA.movimentoAtaque(ArrayCasas, casa)) {
+	                IA.retornaPecaJogavelIa(ArrayCasas, that.usuHumano.nome);
+	            }
+            }else{
+				CasaSelecionada.selected();
+			}
+		
             CasaSelecionada = null;
+			comeu = false;  
         } else {
-
-            if (casa.getPeca() == null) {
-                casa.selected();
-                Anima(that.usuHumano, that.usuHumano.MsgErroPecaVazia());  // A maquina na vai cometer erros de validacao, logo podemos marretar o usuario aqui
-                return;
-            }
-
-            if (casa.getPeca().Usuario.tdFala != that.usuHumano.tdFala) {
-                Anima(that.usuMakina, that.usuMakina.MsgErroPecaErrada());  // A maquina na vai cometer erros de validacao, logo podemos marretar o usuario aqui
-                return;
-            }
-            CasaSelecionada = casa;
-            console.log(CasaSelecionada.getPeca().getDama());
+            if (ValidaCasaSelecionada(casa)) {
+			   CasaSelecionada = casa;
+			   CasaSelecionada.selected();
+        	}
         }
-    }
-
+		VerificaVitoria();
+    };
+	
+	function ContadorJogadasSemCapturaZerar(){
+		var td = document.getElementById("jogadasSemCapturaGeral");
+        td.textContent = 0;
+	}
+	
+	function ContadorJogadasSemCaptura(){
+		var td = document.getElementById("jogadasSemCapturaGeral");
+		var count = Number(td.textContent) + 1;
+        td.textContent = count;
+		if(count == 20){
+			 alert("EMPATOU");
+		}
+	}
+	
+	function VerificaVitoria(){
+		var qtdHumano = 0;
+		var qtdMaquina = 0;
+		
+		for (var i = 0; i < 8; i++) {
+            for (var j = 0; j < 8; j++) {
+                 var peca = ArrayCasas[i][j].getPeca();
+				 if(peca != null){
+					 if(peca.Usuario.nome == that.usuMakina.nome){
+						 qtdMaquina++;
+					 }else{
+					    qtdHumano++;
+					 } 
+				 }
+         
+            }
+        }
+		
+		if(qtdHumano == 0){
+			alert("MAQUINA GANHOU"); 
+		}
+		
+		if(qtdMaquina == 0){
+			alert("HUMANO GANHOU"); 
+		}
+	}
+	
+	
 
     function addPontosPreto(){
         var td = document.getElementById("placar_coffee");
         td.textContent = Number(td.textContent) + 1;
     }
 
-    function addPontosBranco(){
-        var td = document.getElementById("placar_beer");
-        td.textContent = Number(td.textContent) + 1;
-    }
-
-    var Anima = function (usu, texto) {
+    var ExibeMsgValidacao = function (texto) {
     
-        var td = document.getElementById(usu.tdAnimacao);
-        td.innerHTML = "";                          //Removendo a Imagem Anterior
-        td.appendChild(usu.ImagemFaceAnima());
-    
-    
-        document.getElementById(usu.tdFala).value = "";
-        document.getElementById(usu.tdFala).value = texto
+	    document.getElementById("MsgValidacao").value = "";
+        document.getElementById("MsgValidacao").value = texto
     
         setTimeout(function myFunction() {
-            td.innerHTML = "";
-            td.appendChild(usu.ImagemFace());
-            document.getElementById(usu.tdFala).value = "";
+            document.getElementById("MsgValidacao").value = "";
         }, 3000);
     }
 
 }
-
-
-

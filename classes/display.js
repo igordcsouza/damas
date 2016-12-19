@@ -3,7 +3,7 @@ function Display() {
     var selecionado = null;
     var bill = new Bill();
     var jobs = new Jobs();
-    var jogadasSemCaptura = 20;
+    var jogadasSemCaptura = 0;
 
     this.getUsuarioSelecionado = function () {
         return selecionado;
@@ -26,6 +26,7 @@ function Display() {
         var colamakinaFalando = document.createElement("td");
         var AreaHumanoFalando = document.createElement("textarea");
         var AreaMakinaFalando = document.createElement("textarea");
+		var AreaMsgValidao = document.createElement("textarea");
 
         colAnimacaoHumano.setAttribute("id", "animacaoHumano");
         colAnimacaoHumano.setAttribute("class", "tdAnimacao");
@@ -35,12 +36,16 @@ function Display() {
 
         AreaHumanoFalando.setAttribute("id", "humanoFalando");
         AreaMakinaFalando.setAttribute("id", "makinaFalando");
+		AreaMsgValidao.setAttribute("id", "MsgValidacao");
+		
         tabela.setAttribute("id", "tabelaDisplay");
         tabela.setAttribute("class", "table-responsive");
+		
+		colNula.setAttribute("id", "ColunaMsgValidacao");
+		
 
-
-
-        colhumanoFalando.appendChild(AreaHumanoFalando);
+        colNula.appendChild(AreaMsgValidao);
+		colhumanoFalando.appendChild(AreaHumanoFalando);
         colamakinaFalando.appendChild(AreaMakinaFalando);
 
         linhaTabuleiro.appendChild(colAnimacaoHumano);
@@ -52,6 +57,7 @@ function Display() {
 
         tabela.appendChild(linhaTabuleiro);
         tabela.appendChild(linhaFala);
+				
 
         return tabela;
 
@@ -117,6 +123,7 @@ function Display() {
 
         var cont = document.createElement("div");
         cont.setAttribute("class", "numero");
+		cont.setAttribute("id", "jogadasSemCapturaGeral");
         cont.innerHTML = jogadasSemCaptura;
 
         colContadorJogadas.appendChild(txt_contador);
@@ -147,17 +154,9 @@ function Display() {
         var td3;
 
         for (var i = 0; i < tds.length; i++) {
-            if (tds[i].id == "animacaoHumano") {
-                td1 = i;
-            }
-
-            if (tds[i].id == "TDtabuleiro") {
-                td3 = i;
-            }
-
-            if (tds[i].id == "animacaoMakina") {
-                td2 = i;
-            }
+            if (tds[i].id == "animacaoHumano") { td1 = i; }
+            if (tds[i].id == "TDtabuleiro") { td3 = i; }
+            if (tds[i].id == "animacaoMakina") { td2 = i; }
         }
         
         var h2 = document.createElement("h2");

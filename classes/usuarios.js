@@ -1,4 +1,4 @@
-function Usuario() {
+    function Usuario() {
 
     this.msgErroValidacao = new Array();
     this.msgErroValidacao[0] = "ERRO VALIDACAO 0";

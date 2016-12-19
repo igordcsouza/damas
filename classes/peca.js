@@ -1,7 +1,6 @@
 function Peca(usu) {
     this.Usuario = usu;
     var Dama = false;
-
     this.getUsuario = function () { return (this.Usuario.nome || null) }
     this.getDama = function () { return Dama; };
     this.setDama = function (valor) { Dama = valor; };

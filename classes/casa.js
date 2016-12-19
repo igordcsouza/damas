@@ -37,13 +37,11 @@ function Casa() {
 
     this.setPeca = function (value) {
         peca = value;
-        if(peca.getDama()){
-            //console.log(posicao.x);
-            //console.log(posicao.y);
+        if (peca.getDama()) {
             var item = $(peca.get()).hide().fadeIn();
             $(TD).append(item);
         }
-        else{
+        else {
             TD.appendChild(peca.get());
         }
     };
@@ -56,17 +54,27 @@ function Casa() {
     this.setTR = function (value) {
         TR = value;
     };
+	
+	this.selectedAzul = function () {
+		this.setCor("PecaAzul");
+	}
+	
+	this.selectedVermelho = function () {
+		this.setCor("PecaVermelho");
+	}
 
     this.selected = function () {
         if (this.getCor() == "cor") {
-            // console.log(this.getCor() == "cor");
             this.setCor("selected");
         }
         else if (this.getCor() == "selected") {
-            console.log("2");
             this.setCor("cor");
         }
     }
+	
+	this.setSelected = function (){
+		this.setCor("selected");
+	}
 
     this.getTR = function () {
         return TR;
@@ -75,7 +83,6 @@ function Casa() {
     this.setTD = function (value) {
         TD = value;
         TD.onclick = function () {            
-            instance.selected();
             tabuleiro.Movimenta(instance);
         };
     };
