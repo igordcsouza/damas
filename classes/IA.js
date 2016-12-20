@@ -13,11 +13,15 @@ function InteligenciaArtificial() {
         if ((casaDireita) && (casaDireita.getUsuario() != casa.getPeca().getUsuario())) {
             console.log("Possibilidade de ataque da direita");
             if (!casaDownEsquerda) {
-                console.log("Come da direita para esquerda");
+                if (casa.getPeca().getUsuario() == "jobs") {
+                    addPontosPreto();
+                }
+                else {
+                    addPontosBranco();
+                }
                 casa.LimpaCasa();
                 ArrayCasas[casa.getPosicao().y + 1][casa.getPosicao().x - 1].setPeca(casaDireita);
                 ArrayCasas[casa.getPosicao().y - 1][casa.getPosicao().x + 1].LimpaCasa();
-                addPontosBranco();
                 ContadorJogadasSemCapturaZerar();
                 return true;
             }
@@ -27,10 +31,18 @@ function InteligenciaArtificial() {
         }
         if ((casaEsquerda) && (casaEsquerda.getUsuario() != casa.getPeca().getUsuario())) {
             if (!casaDownDireita) {
+                console.log("---2---");
+                console.log(casa.getPeca().getUsuario());
+                if (casa.getPeca().getUsuario() == "jobs") {
+                    addPontosPreto();
+                }
+                else {
+                    addPontosBranco();
+                }
+                console.log("---2---");
                 casa.LimpaCasa();
                 ArrayCasas[casa.getPosicao().y + 1][casa.getPosicao().x + 1].setPeca(casaEsquerda);
                 ArrayCasas[casa.getPosicao().y - 1][casa.getPosicao().x - 1].LimpaCasa();
-                addPontosBranco();
                 ContadorJogadasSemCapturaZerar();
                 return true;
             }
@@ -46,6 +58,11 @@ function InteligenciaArtificial() {
 
     function addPontosBranco() {
         var td = document.getElementById("placar_beer");
+        td.textContent = Number(td.textContent) + 1;
+    }
+
+    function addPontosPreto(){
+        var td = document.getElementById("placar_coffee");
         td.textContent = Number(td.textContent) + 1;
     }
 	

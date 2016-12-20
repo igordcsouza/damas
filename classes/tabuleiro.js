@@ -148,7 +148,12 @@ function Tabuleiro(humano) {
         if (CasaSelecionada.getPeca().Usuario != ArrayCasas[CasaSelecionada.getPosicao().y - 1][CasaSelecionada.getPosicao().x + param].getPeca().Usuario) {
             ArrayCasas[CasaSelecionada.getPosicao().y - 1][CasaSelecionada.getPosicao().x + param].LimpaCasa();
 			comeu = true;
-		    addPontosPreto();
+            if (CasaSelecionada.getPeca().getUsuario() == "jobs") {
+                addPontosBranco();
+            }
+            else {
+                addPontosPreto();
+            }
 		    return true;
         }
         return false;
@@ -414,6 +419,11 @@ function Tabuleiro(humano) {
 
     function addPontosPreto(){
         var td = document.getElementById("placar_coffee");
+        td.textContent = Number(td.textContent) + 1;
+    }
+
+    function addPontosBranco() {
+        var td = document.getElementById("placar_beer");
         td.textContent = Number(td.textContent) + 1;
     }
 
