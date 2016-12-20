@@ -317,7 +317,6 @@ function Tabuleiro(humano) {
         }
 		*/
 
-        
         return true;
     }
 
