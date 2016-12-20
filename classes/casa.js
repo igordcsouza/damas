@@ -37,13 +37,7 @@ function Casa() {
 
     this.setPeca = function (value) {
         peca = value;
-        if (peca.getDama()) {
-            var item = $(peca.get()).hide().fadeIn();
-            $(TD).append(item);
-        }
-        else {
-            TD.appendChild(peca.get());
-        }
+        
     };
 
 

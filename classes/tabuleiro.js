@@ -15,13 +15,43 @@ function Tabuleiro(humano) {
     this.usuHumano = humano;
     this.usuMakina = null;
 
+
+
     /* função para teste unitários */
     this.RetornaArrayCasas = function () {
         return ArrayCasas;
     }
+
+    this.RetornaUsuarioHumano = function () {
+        return that.usuHumano;
+    }
+
+    this.RetornaUsuarioMaquina = function () {
+        return that.usuMakina;
+    }
+
+    this.RemovendoUsuarios = function (nome) {
+        for (var i = 0; i < 8; i++) {
+            for (var j = 0; j < 8; j++) {
+                var peca = ArrayCasas[i][j].getPeca();
+                if (peca != null) {
+                    if (peca.Usuario.nome == nome) {
+                        ArrayCasas[i][j].setPeca(null);
+                    }
+                }
+
+            }
+        }
+    }
+
+
+
+   
+
+
     
     /* PRIVATE - Criando o Array de Casas */
-    var CriaArrayCasas = function () {
+    this.CriaArrayCasas = function () {
         for (var i = 0; i < 8; i++) {
             ArrayCasas[i] = new Array();
             for (var j = 0; j < 8; j++) {
@@ -70,7 +100,7 @@ function Tabuleiro(humano) {
     }
 
     /*  PRIVATE - Distribuindo as pecas */
-    var DistribuiPecas = function () {
+    this.DistribuiPecas = function () {
         for (var i = 0; i < 3; i++) {
             for (var j = 0; j < 8; j++) {
                 if (((i % 2) == 0) && ((j % 2) == 1)) {
@@ -86,7 +116,7 @@ function Tabuleiro(humano) {
     }
 
     /*  PRIVATE - Distribuindo as pecas */
-    var InicializaParticipantes = function () {
+    this.InicializaParticipantes = function () {
 
         if (that.usuHumano.nome == "bill") {
            that.usuMakina = new Jobs();
@@ -102,14 +132,14 @@ function Tabuleiro(humano) {
         that.usuHumano.tdFala = "humanoFalando";
         that.usuMakina.tdFala = "makinaFalando";
 
-        document.getElementById(that.usuHumano.tdAnimacao).appendChild(that.usuHumano.ImagemFace());
-        document.getElementById(that.usuMakina.tdAnimacao).appendChild(that.usuMakina.ImagemFace());
+        //document.getElementById(that.usuHumano.tdAnimacao).appendChild(that.usuHumano.ImagemFace());
+        //document.getElementById(that.usuMakina.tdAnimacao).appendChild(that.usuMakina.ImagemFace());
 
     }
     
     /* CONSTRUTOR */
     var __construct = function () {
-        CriaArrayCasas();
+       // CriaArrayCasas();
        // MontaTabuleiroHtml();
        // ColoreTabuleiro();
        // InicializaParticipantes();
@@ -163,7 +193,7 @@ function Tabuleiro(humano) {
 		}
 	}
 	
-	function RetornaCasaDestinoParaMultiplo(casa, p1, p2){
+	this.RetornaCasaDestinoParaMultiplo = function(casa, p1, p2){
 		if (casa != null){
 			try {
  			   if(casa.getPeca() != null){
@@ -221,15 +251,15 @@ function Tabuleiro(humano) {
 	}
 	
 	
-	var ValidaCasaSelecionada = function(casa){
+	this.ValidaCasaSelecionada = function(casa){
 		
  		   if (casa.getPeca() == null) {
-                ExibeMsgValidacao("Voce precisa clicar em uma casa que tenha uma peca!");
+                //ExibeMsgValidacao("Voce precisa clicar em uma casa que tenha uma peca!");
                 return false;
             }
 
             if (casa.getPeca().Usuario.tdFala != that.usuHumano.tdFala) {
-                ExibeMsgValidacao("Voce precisa clicar em uma casa que tenha uma peca sua!");
+                //ExibeMsgValidacao("Voce precisa clicar em uma casa que tenha uma peca sua!");
                 return false;
             }
 			
@@ -368,6 +398,10 @@ function Tabuleiro(humano) {
         }
 		VerificaVitoria();
     };
+
+
+
+
 	
 	function ContadorJogadasSemCapturaZerar(){
 		var td = document.getElementById("jogadasSemCapturaGeral");
@@ -382,8 +416,8 @@ function Tabuleiro(humano) {
 			 alert("EMPATOU");
 		}
 	}
-	
-	function VerificaVitoria(){
+
+	this.VerificaVitoria = function () {
 		var qtdHumano = 0;
 		var qtdMaquina = 0;
 		
@@ -402,12 +436,16 @@ function Tabuleiro(humano) {
         }
 		
 		if(qtdHumano == 0){
-			alert("MAQUINA GANHOU"); 
+		    //alert("MAQUINA GANHOU");
+		    return 1;
 		}
 		
 		if(qtdMaquina == 0){
-			alert("HUMANO GANHOU"); 
+		    //alert("HUMANO GANHOU");
+		    return 2;
 		}
+
+		return 0;
 	}
 	
 	
