@@ -305,6 +305,7 @@ function Tabuleiro(humano) {
 		if (c.getPosicao().x == 0) {
             CasaSelecionada.getPeca().setDama(true);
         }
+	*/
 
         if (c.getPosicao().y == 0) {
             CasaSelecionada.getPeca().setDama(true);   
@@ -312,10 +313,10 @@ function Tabuleiro(humano) {
 
         if ((c.getPosicao().y >= CasaSelecionada.getPosicao().y) && (!CasaSelecionada.getPeca().getDama())) {
             console.log("Tentando andar apra tras.");
-            movimentoIrregular(c);
+            ExibeMsgValidacao("Jogada irregular!");
             return false;
         }
-		*/
+		
 
         return true;
     }
