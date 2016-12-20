@@ -251,7 +251,7 @@ function Tabuleiro(humano) {
 		
         if (c.getPosicao().x == CasaSelecionada.getPosicao().x || c.getPosicao().y == CasaSelecionada.getPosicao().y) {   
 
-//Verificando movimentacao lateral
+            //Verificando movimentacao lateral
 		    ExibeMsgValidacao("Voce so pode andar na diagonal!");
             return false;
         }
@@ -275,20 +275,24 @@ function Tabuleiro(humano) {
         }
 
         if ((c.getPosicao().x >= CasaSelecionada.getPosicao().x + 2) && (!CasaSelecionada.getPeca().getDama())){
-            if (c.getPosicao().x == CasaSelecionada.getPosicao().x + 2) {
+            if ((c.getPosicao().x == CasaSelecionada.getPosicao().x + 2) && ((c.getPosicao().y == CasaSelecionada.getPosicao().y - 2))) {
                 return validaCaptura(1);  //DIREITA
             }
-            console.log("O player pulou uma linha. Verificar se foi o caso de comer um peca ou uma jogada irregular. 1");
-            ExibeMsgValidacao("Jogada irregular!");
-            return false;            
+            else {
+                console.log("O player pulou uma linha. Verificar se foi o caso de comer um peca ou uma jogada irregular. 1");
+                ExibeMsgValidacao("Jogada irregular!");
+                return false;            
+            }
         }
 
         if ((c.getPosicao().x <= CasaSelecionada.getPosicao().x - 2) && (!CasaSelecionada.getPeca().getDama())){
-            if (c.getPosicao().x == CasaSelecionada.getPosicao().x - 2) {
+            if ((c.getPosicao().x == CasaSelecionada.getPosicao().x - 2) && (c.getPosicao().y == CasaSelecionada.getPosicao().y - 2)){
                 return validaCaptura(-1); //ESQUERDA
             }
-            ExibeMsgValidacao("Jogada irregular!");
-            return false;
+            else {
+                ExibeMsgValidacao("Jogada irregular!");
+                return false;
+            }
         }
 		
 
