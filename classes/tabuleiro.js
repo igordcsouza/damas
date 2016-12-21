@@ -359,6 +359,7 @@ function Tabuleiro(humano) {
 					validaCapturaMultipla(casa);   //Precisa ser aqui pq eu tenho que passar a casa
 				}else{
 					ContadorJogadasSemCaptura();
+                    CasaSelecionada = null;
 				}
 	            if (!IA.movimentoAtaque(ArrayCasas, casa)) {
 	                IA.retornaPecaJogavelIa(ArrayCasas, that.usuHumano.nome);
