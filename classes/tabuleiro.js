@@ -23,6 +23,13 @@ function Tabuleiro(humano) {
 	     return true;	
 	}
 	
+	function STUB_addPontosPreto(){
+	     return true;	
+	}
+	
+	
+	
+	
 	 this.setCasaSelecionada = function (casa) {
         CasaSelecionada = casa;
     }
@@ -183,11 +190,11 @@ function Tabuleiro(humano) {
     } () 
 
 
-    function validaCaptura(param) {
+    this.validaCaptura = function (param) {
         if (CasaSelecionada.getPeca().Usuario != ArrayCasas[CasaSelecionada.getPosicao().y - 1][CasaSelecionada.getPosicao().x + param].getPeca().Usuario) {
-            ArrayCasas[CasaSelecionada.getPosicao().y - 1][CasaSelecionada.getPosicao().x + param].LimpaCasa();
-			comeu = true;
-		    addPontosPreto();
+            //ArrayCasas[CasaSelecionada.getPosicao().y - 1][CasaSelecionada.getPosicao().x + param].LimpaCasa();
+			//comeu = true;
+		    STUB_addPontosPreto();
 		    return true;
         }
         return false;
