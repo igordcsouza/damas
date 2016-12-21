@@ -27,10 +27,18 @@ function Tabuleiro(humano) {
 	     return true;	
 	}
 	
+	this.setCasaSemPeca = function (x, y) {
+        ArrayCasas[x][y].setPeca(null);
+		return ArrayCasas[x][y];
+    }
 	
 	
+	this.setCasaSelecionada = function (casa) {
+        CasaSelecionada = casa;
+    }
 	
-	 this.setCasaSelecionada = function (casa) {
+	
+	this.setCasaSelecionada = function (casa) {
         CasaSelecionada = casa;
     }
 	
@@ -190,7 +198,7 @@ function Tabuleiro(humano) {
     } () 
 
 
-    this.validaCaptura = function (param) {
+    function validaCaptura(param) {
         if (CasaSelecionada.getPeca().Usuario != ArrayCasas[CasaSelecionada.getPosicao().y - 1][CasaSelecionada.getPosicao().x + param].getPeca().Usuario) {
             //ArrayCasas[CasaSelecionada.getPosicao().y - 1][CasaSelecionada.getPosicao().x + param].LimpaCasa();
 			//comeu = true;
@@ -315,8 +323,8 @@ function Tabuleiro(humano) {
 
         if ((c.getPosicao().x >= CasaSelecionada.getPosicao().x + 2) && (!CasaSelecionada.getPeca().getDama())){
             if ((c.getPosicao().x == CasaSelecionada.getPosicao().x + 2) && ((c.getPosicao().y == CasaSelecionada.getPosicao().y - 2))) {
-				return STUB_validaCaptura();
-                //return validaCaptura(1);  //DIREITA
+				//return STUB_validaCaptura();
+                return validaCaptura(1);  //DIREITA
             }
             else {
                 //console.log("O player pulou uma linha. Verificar se foi o caso de comer um peca ou uma jogada irregular. 1");
@@ -327,8 +335,8 @@ function Tabuleiro(humano) {
 
         if ((c.getPosicao().x <= CasaSelecionada.getPosicao().x - 2) && (!CasaSelecionada.getPeca().getDama())){
             if ((c.getPosicao().x == CasaSelecionada.getPosicao().x - 2) && (c.getPosicao().y == CasaSelecionada.getPosicao().y - 2)){
-				return STUB_validaCaptura();
-               // return validaCaptura(-1); //ESQUERDA
+				//return STUB_validaCaptura();
+               return validaCaptura(-1); //ESQUERDA
             }
             else {
                 //ExibeMsgValidacao("Jogada irregular!");
