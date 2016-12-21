@@ -105,4 +105,47 @@ QUnit.test("testando RetornaCasaDestinoParaMultiplo", function (assert) {
 });
 
 
+QUnit.test("testando validaMovimento", function (assert) {
+
+
+    var tab = new Tabuleiro(new Bill());
+    var casa_destino = new Casa();
+	var casa_origem = new Casa();
+	
+	casa_destino.setPeca(new Peca(tab.RetornaUsuarioMaquina()));
+	assert.equal(tab.validaMovimento(casa_destino), false, "Casa de destino contem uma peca");
+	
+	casa_destino.setPeca(null);
+	casa_destino.setPosicao(new Posicao(3, 3));
+	casa_origem.setPosicao(new Posicao(3, 3));
+	tab.setCasaSelecionada(casa_origem);
+	assert.equal(tab.validaMovimento(casa_destino), false, "Casa de destino e origem iguais");
+		
+	casa_origem.setPeca(new Peca(tab.RetornaUsuarioMaquina()));
+	tab.setCasaSelecionada(casa_origem);
+	casa_origem.getPeca().setDama(false);
+	casa_destino.setPosicao(new Posicao(5, 7));
+	casa_origem.setPosicao(new Posicao(3, 3));
+    assert.equal(tab.validaMovimento(casa_destino), false, "tentou pular mais que 3 casas para a direita");
+	
+	casa_destino.setPosicao(new Posicao(6, 1));
+	casa_origem.setPosicao(new Posicao(5, 5));
+    assert.equal(tab.validaMovimento(casa_destino), false, "tentou pular mais que 3 casas para a esquerda");
+	
+	
+	casa_destino.setPosicao(new Posicao(6, 7));
+	casa_origem.setPosicao(new Posicao(8, 5));
+    assert.equal(tab.validaMovimento(casa_destino), true, "comeu uma peca para direita ----STUB----");
+	
+	casa_destino.setPosicao(new Posicao(6, 3));
+	casa_origem.setPosicao(new Posicao(8, 5));
+    assert.equal(tab.validaMovimento(casa_destino), true, "comeu uma peca para esquerda -----STUB----");
+	
+	
+
+
+});
+
+
+
   
