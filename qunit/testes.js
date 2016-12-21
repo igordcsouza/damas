@@ -105,6 +105,7 @@ QUnit.test("testando RetornaCasaDestinoParaMultiplo", function (assert) {
 });
 
 
+
 QUnit.test("testando validaMovimento", function (assert) {
 
 
@@ -146,6 +147,7 @@ QUnit.test("testando validaMovimento", function (assert) {
 });
 
 
+
 QUnit.test("testando validaCaptura", function (assert) {
 
 
@@ -164,6 +166,24 @@ QUnit.test("testando validaCaptura", function (assert) {
 	assert.equal(tab.validaCaptura(-1), true, "Capturou pela esquerda");
 	assert.equal(tab.validaCaptura(1), true, "Capturou pela direita");
 
+
+});
+
+
+QUnit.test("testando validaMovimento  (--INTEGRACAO--)", function (assert) {
+
+    var tab = new Tabuleiro(new Bill());
+	tab.CriaArrayCasas();
+    tab.InicializaParticipantes();
+	tab.DistribuiPecas();
+	
+	var casa_origem =  new Casa();
+	casa_origem.setPeca(new Peca(tab.RetornaUsuarioHumano()));
+	casa_origem.setPosicao(new Posicao(3, 3));
+	tab.setCasaSelecionada(casa_origem);
+	
+	var casa_destino = tab.setCasaSemPeca(1,1);
+	assert.equal(tab.validaMovimento(casa_destino), true, "Validou e Capturou");
 
 });
 
