@@ -18,6 +18,15 @@ function Tabuleiro(humano) {
 
 
     /* função para teste unitários */
+	
+	function STUB_validaCaptura(){
+	     return true;	
+	}
+	
+	 this.setCasaSelecionada = function (casa) {
+        CasaSelecionada = casa;
+    }
+	
     this.RetornaArrayCasas = function () {
         return ArrayCasas;
     }
@@ -267,17 +276,15 @@ function Tabuleiro(humano) {
     }
 
     /* implementar a regra de movimento*/
-    var validaMovimento = function (c) {
+    this.validaMovimento = function (c) {
         		
         if (c.getPeca() != null) {   //Verificando se a casa de destino está sem peça
-			ExibeMsgValidacao("A casa de destino precisa estar vazia!");
+			//ExibeMsgValidacao("A casa de destino precisa estar vazia!");
  			return false;
         }
 		
         if (c.getPosicao().x == CasaSelecionada.getPosicao().x || c.getPosicao().y == CasaSelecionada.getPosicao().y) {   
-
-//Verificando movimentacao lateral
-		    ExibeMsgValidacao("Voce so pode andar na diagonal!");
+		    //ExibeMsgValidacao("Voce so pode andar na diagonal!");
             return false;
         }
 		
@@ -300,49 +307,36 @@ function Tabuleiro(humano) {
         }
 
         if ((c.getPosicao().x >= CasaSelecionada.getPosicao().x + 2) && (!CasaSelecionada.getPeca().getDama())){
-            if (c.getPosicao().x == CasaSelecionada.getPosicao().x + 2) {
-                return validaCaptura(1);  //DIREITA
+            if ((c.getPosicao().x == CasaSelecionada.getPosicao().x + 2) && ((c.getPosicao().y == CasaSelecionada.getPosicao().y - 2))) {
+				return STUB_validaCaptura();
+                //return validaCaptura(1);  //DIREITA
             }
-            console.log("O player pulou uma linha. Verificar se foi o caso de comer um peca ou uma jogada irregular. 1");
-            ExibeMsgValidacao("Jogada irregular!");
-            return false;            
+            else {
+                //console.log("O player pulou uma linha. Verificar se foi o caso de comer um peca ou uma jogada irregular. 1");
+                //ExibeMsgValidacao("Jogada irregular!");
+                return false;            
+            }
         }
 
         if ((c.getPosicao().x <= CasaSelecionada.getPosicao().x - 2) && (!CasaSelecionada.getPeca().getDama())){
-            if (c.getPosicao().x == CasaSelecionada.getPosicao().x - 2) {
-                return validaCaptura(-1); //ESQUERDA
+            if ((c.getPosicao().x == CasaSelecionada.getPosicao().x - 2) && (c.getPosicao().y == CasaSelecionada.getPosicao().y - 2)){
+				return STUB_validaCaptura();
+               // return validaCaptura(-1); //ESQUERDA
             }
-            ExibeMsgValidacao("Jogada irregular!");
-            return false;
+            else {
+                //ExibeMsgValidacao("Jogada irregular!");
+                return false;
+            }
         }
 		
 
         if (((c.getPosicao().y >= CasaSelecionada.getPosicao().y + 2) || (c.getPosicao().y <= CasaSelecionada.getPosicao().y - 2)) && (!CasaSelecionada.getPeca().getDama())){
-            console.log("O player pulou uma coluna. Verificar se foi caso de comer uma peca ou uma jogada irregular. 2");
-            ExibeMsgValidacao("Jogada irregular!");
+            //console.log("O player pulou uma coluna. Verificar se foi caso de comer uma peca ou uma jogada irregular. 2");
+            //ExibeMsgValidacao("Jogada irregular!");
             return false;
         }
 
-        // Remover para a validação da dama ser realmente valida
-        // Esse código coloca qualquer pedra que encoste na parede esquerda como dama. 
-        // Apenas para fins de testes.
-        /*
-		if (c.getPosicao().x == 0) {
-            CasaSelecionada.getPeca().setDama(true);
-        }
 
-        if (c.getPosicao().y == 0) {
-            CasaSelecionada.getPeca().setDama(true);   
-        }
-
-        if ((c.getPosicao().y >= CasaSelecionada.getPosicao().y) && (!CasaSelecionada.getPeca().getDama())) {
-            console.log("Tentando andar apra tras.");
-            movimentoIrregular(c);
-            return false;
-        }
-		*/
-
-        
         return true;
     }
 
