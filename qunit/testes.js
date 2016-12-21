@@ -141,10 +141,32 @@ QUnit.test("testando validaMovimento", function (assert) {
 	casa_origem.setPosicao(new Posicao(8, 5));
     assert.equal(tab.validaMovimento(casa_destino), true, "comeu uma peca para esquerda -----STUB----");
 	
-	
 
 
 });
+
+
+QUnit.test("testando validaCaptura", function (assert) {
+
+
+    var tab = new Tabuleiro(new Bill());
+	
+	tab.CriaArrayCasas();
+    tab.InicializaParticipantes();
+	tab.DistribuiPecas();
+	
+	
+	var casa_origem =  new Casa();
+	casa_origem.setPeca(new Peca(tab.RetornaUsuarioHumano()));
+	casa_origem.setPosicao(new Posicao(3, 3));
+	tab.setCasaSelecionada(casa_origem);
+	
+	assert.equal(tab.validaCaptura(-1), true, "Capturou pela esquerda");
+	assert.equal(tab.validaCaptura(1), true, "Capturou pela direita");
+
+
+});
+
 
 
 
