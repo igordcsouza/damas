@@ -1,6 +1,7 @@
 function InteligenciaArtificial() {
 
     this.movimentoAtaque = function (ArrayCasas, casa) {
+        
         console.log("------");
         var casaDireita = ArrayCasas[casa.getPosicao().y - 1][casa.getPosicao().x + 1].getPeca();
         var casaEsquerda = ArrayCasas[casa.getPosicao().y - 1][casa.getPosicao().x - 1].getPeca();
@@ -20,8 +21,12 @@ function InteligenciaArtificial() {
                     addPontosBranco();
                 }
                 casa.LimpaCasa();
-                ArrayCasas[casa.getPosicao().y + 1][casa.getPosicao().x - 1].setPeca(casaDireita);
+                
                 ArrayCasas[casa.getPosicao().y - 1][casa.getPosicao().x + 1].LimpaCasa();
+                if (casa.getPosicao().y + 1 >= 7) {
+                    casaDireita.setDama(true);
+                }
+                ArrayCasas[casa.getPosicao().y + 1][casa.getPosicao().x - 1].setPeca(casaDireita);
                 ContadorJogadasSemCapturaZerar();
                 return true;
             }
@@ -41,8 +46,13 @@ function InteligenciaArtificial() {
                 }
                 console.log("---2---");
                 casa.LimpaCasa();
-                ArrayCasas[casa.getPosicao().y + 1][casa.getPosicao().x + 1].setPeca(casaEsquerda);
+
                 ArrayCasas[casa.getPosicao().y - 1][casa.getPosicao().x - 1].LimpaCasa();
+                if (casa.getPosicao().y + 1 >= 7) {
+                    casaEsquerda.setDama(true);
+                    // ArrayCasas[casa.getPosicao().y + 1][casa.getPosicao().x + 1].setPeca(casaEsquerda);
+                }
+                ArrayCasas[casa.getPosicao().y + 1][casa.getPosicao().x + 1].setPeca(casaEsquerda);
                 ContadorJogadasSemCapturaZerar();
                 return true;
             }
@@ -100,7 +110,12 @@ function InteligenciaArtificial() {
         var direita = validaPosicaoIA(ArrayCasas, linha+1, coluna + 1);
         var esquerda = validaPosicaoIA(ArrayCasas, linha+1, coluna - 1);
         var casa = ArrayCasas[linha][coluna];
-
+        console.log("--- linha ---");
+        console.log(linha+1);
+        if ((linha + 1) >= 7){
+            casa.getPeca().setDama(true);
+        }
+        console.log("--- linha ---");
         if ((direita == true) && (esquerda == true)){
             if (Math.random() >= 0.5) {
                 ArrayCasas[linha+1][coluna+1].setPeca(casa.getPeca());
@@ -150,5 +165,11 @@ function InteligenciaArtificial() {
         return false;   
    }
 	
-    
+    function sleep(millis)
+    {
+        var date = new Date();
+        var curDate = null;
+        do { curDate = new Date(); }
+        while(curDate-date < millis);
+    }
 }
